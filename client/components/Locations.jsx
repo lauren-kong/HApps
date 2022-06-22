@@ -15,8 +15,7 @@ function Locations() {
     })
   }, [])
 
-  console.log(regions)
-
+  console.log()
   return (
     <div className="locations">
       <h2 className="north-island-title">North Island</h2>
