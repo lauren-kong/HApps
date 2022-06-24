@@ -21,10 +21,25 @@ export function getPostsByRegionCode(code) {
     .then((res) => {
       const posts = res.body
       const parsedPosts = posts.map((post) => {
-        const parsedPost = { ...post, postImages: JSON.parse(post.postImages) }
+        const parsedPost = {
+          ...post,
+          postImages: JSON.parse(post.postImages),
+        }
         return parsedPost
       })
       return parsedPosts
+    })
+    .catch((err) => {
+      console.error(err)
+    })
+}
+
+export function updatePostClicked(id, bool) {
+  return request
+    .patch(`${url}/clicked/${id}/${bool}`)
+    .then((res) => {
+      // console.log(res.body)
+      return res.body
     })
     .catch((err) => {
       console.error(err)

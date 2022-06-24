@@ -1,12 +1,12 @@
 const environment = process.env.NODE_ENV || 'development'
-
-console.log(environment)
 const config = require('./knexfile')[environment]
 const connection = require('knex')(config)
 
 module.exports = {
   getRegions,
   getPostsByRegionCode,
+  updatePostClicked,
+  updateReliabCount,
 }
 
 function getRegions(db = connection) {
@@ -29,7 +29,16 @@ function getPostsByRegionCode(regionCode, db = connection) {
       'location',
       'postedTime',
       'description',
-      'reliability'
+      'reliability',
+      'clicked'
     )
     .where({ regionCode })
+}
+
+function updatePostClicked(id, bool, db = connection) {
+  return db('posts').update({ clicked: bool }).where({ id })
+}
+
+function updateReliabCount(id, num, db = connection) {
+  return db('posts').update({ reliability: num }).where({ id })
 }

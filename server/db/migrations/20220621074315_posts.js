@@ -17,6 +17,7 @@ exports.up = function (knex) {
     table.date('postedTime')
     table.text('description')
     table.integer('reliability')
+    table.boolean('clicked')
   })
 }
 

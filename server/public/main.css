@@ -10,7 +10,7 @@
 body {
   margin: 0;
 }
-.custom-shape-divider-top-1655722479 {
+/* .custom-shape-divider-top-1655722479 {
   position: absolute;
   top: 200px;
   left: 0;
@@ -28,8 +28,9 @@ body {
 
 .custom-shape-divider-top-1655722479 .shape-fill {
   fill: var(--main-color-main1);
-}
+} */
 
+/*---------------LOCATIONS------------------*/
 .locations-header {
   height: 200px;
   position: relative;
@@ -61,6 +62,7 @@ body {
   margin-top: 100px;
 }
 
+/*---------------REGIONS------------------*/
 .region {
   display: flex;
   flex-wrap: wrap;
@@ -90,4 +92,104 @@ body {
   max-width: 163.1px;
   color: white;
   text-align: center;
+}
+/*---------------POSTS------------------*/
+
+.display-posts > div {
+  margin-top: 40px;
+  margin-bottom: 40px;
+}
+
+.each-post {
+  border: 0.2px solid gray;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  width: 600px;
+  margin: auto;
+  padding-top: 50px;
+  padding-bottom: 50px;
+}
+
+.post-images {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 20px;
+}
+
+.post-img-div {
+  border: 0.2px solid lightgray;
+
+  display: flex;
+  width: 400px;
+  height: 400px;
+  text-align: center;
+}
+.post-images img {
+  width: 400px;
+  display: block;
+  margin-top: auto;
+  margin-bottom: auto;
+}
+
+.post-images button {
+  border: none;
+  border-radius: 5px;
+  background-color: var(--main-color-main1-transparent);
+  color: white;
+  width: 40px;
+  height: 40px;
+}
+
+.post-images button:hover {
+  background-color: var(--main-color-main1);
+}
+
+.reliab-div {
+  display: flex;
+  width: 400px;
+  height: 50px;
+  border: 0.2px solid lightgray;
+}
+
+.reliab-div i {
+  display: block;
+  width: 20px;
+  margin-left: 350px;
+  margin-top: auto;
+  margin-bottom: auto;
+  text-align: center;
+  font-size: 1.6rem;
+}
+
+#reliab-black {
+  color: black;
+}
+
+#reliab-white {
+  color: white;
+}
+
+.post-details {
+  display: flex;
+  flex-direction: column;
+  width: 400px;
+  height: 200px;
+  border: 0.2px solid lightgray;
+}
+
+.post-details > div {
+  flex: 1;
+  margin-left: 20px;
+}
+
+.post-details > div:first-child {
+  margin-left: 20px;
+  margin-top: 20px;
+}
+
+.post-details > div:last-child {
+  flex: 4;
 }

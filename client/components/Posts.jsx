@@ -9,24 +9,37 @@ function Posts(props) {
   //JAVASCRIPT
   const { region } = props
 
-  const [posts, setPosts] = useState([])
+  const [posts, setPosts] = useState(null)
   useEffect(() => {
     getPostsByRegionCode(region.code).then((postsData) => {
       setPosts(postsData)
     })
+    // console.log(posts)
   }, [])
+
+  // console.log(posts)
+
+  function handlePostsUpdate(updatePosts) {
+    setPosts(updatePosts)
+  }
 
   //JSX
   return (
     <div>
       <Header />
-      {posts.map((post) => {
-        return (
-          <div key="post-div" className="display-posts">
-            <Post key={post.postId} post={post} />
-          </div>
-        )
-      })}
+      {posts
+        ? posts.map((post) => {
+            return (
+              <div key="post-div" className="display-posts">
+                <Post
+                  key={post.postId}
+                  post={post}
+                  handlePostsUpdate={handlePostsUpdate}
+                />
+              </div>
+            )
+          })
+        : null}
     </div>
   )
 }
