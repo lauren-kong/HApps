@@ -11,7 +11,7 @@ server.use(express.static(path.join(__dirname, 'public')))
 server.use(cors('*'))
 server.use(express.urlencoded({ extended: true }))
 
-server.use('/v1/locations', locations)
+server.use('/api/v1/locations', locations)
 
 server.get('*', (req, res) => {
   res.sendFile(path.resolve('server/public/index.html'))

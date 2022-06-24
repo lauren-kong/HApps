@@ -7,6 +7,7 @@ import Region from './Region'
 import { getRegions } from '../apiClient'
 
 function Locations() {
+  //JAVASCRIPT
   const [regions, setRegions] = useState([])
 
   useEffect(() => {
@@ -15,7 +16,7 @@ function Locations() {
     })
   }, [])
 
-  console.log()
+  //JSX
   return (
     <div className="locations">
       <h2 className="north-island-title">North Island</h2>
