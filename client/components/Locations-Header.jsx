@@ -1,9 +1,16 @@
 import React from 'react'
 
+import { Link } from 'react-router-dom'
+
 function LocationsHeader() {
   return (
     <div>
-      <div className="locations-header">Happs</div>
+      <Link to="/locations">
+        <div className="locations-header">
+          <img src="/images/happs-logo.png" alt="logo" className="logo-img" />
+        </div>
+      </Link>
+
       {/* <div class="custom-shape-divider-top-1655722479">
         <svg
           data-name="Layer 1"

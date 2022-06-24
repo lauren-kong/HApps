@@ -69,8 +69,8 @@ function Post(props) {
 
       {/* Post - Reliability Button */}
       <div className="reliab-div" onClick={handleReliabClick}>
-        {reliabClicked && <i className="fa-solid fa-map"></i>}
-        {!reliabClicked && <i className="fa-regular fa-map"></i>}
+        {reliabClicked && <i class="fa-solid fa-thumbs-up"></i>}
+        {!reliabClicked && <i class="fa-regular fa-thumbs-up"></i>}
       </div>
 
       {/* Post - Details */}
