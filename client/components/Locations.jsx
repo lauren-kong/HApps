@@ -4,17 +4,19 @@ import Region from './Region'
 
 // import regionsData from '../../data/regions'
 
-import { getRegions } from '../apiClient'
+// import { getRegions } from '../apiClient'
 
-function Locations() {
+function Locations(props) {
   //JAVASCRIPT
-  const [regions, setRegions] = useState([])
+  // const [regions, setRegions] = useState(null)
 
-  useEffect(() => {
-    getRegions().then((regionsData) => {
-      setRegions(regionsData)
-    })
-  }, [])
+  // useEffect(() => {
+  //   getRegions().then((regionsData) => {
+  //     setRegions(regionsData)
+  //   })
+  // }, [])
+
+  const { regions } = props
 
   //JSX
   return (

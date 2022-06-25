@@ -2,14 +2,21 @@ import React from 'react'
 
 import { Link } from 'react-router-dom'
 
-function LocationsHeader() {
+import RegionDropdown from './RegionDropdown'
+
+function HeaderLogo(props) {
+  const { regions } = props
   return (
-    <div>
-      <Link to="/locations">
-        <div className="locations-header">
+    <div className="header-top-inner">
+      <div className="header-logo-div">
+        <Link to="/locations">
           <img src="/images/happs-logo.png" alt="logo" className="logo-img" />
-        </div>
-      </Link>
+        </Link>
+      </div>
+
+      <div className="region-dropdown">
+        <RegionDropdown regions={regions} />
+      </div>
 
       {/* <div class="custom-shape-divider-top-1655722479">
         <svg
@@ -28,4 +35,4 @@ function LocationsHeader() {
   )
 }
 
-export default LocationsHeader
+export default HeaderLogo

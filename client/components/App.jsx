@@ -1,7 +1,8 @@
 import React, { useState, useEffect } from 'react'
 import { getRegions, getPostsByRegionCode } from '../apiClient'
 
-import LocationsHeader from './Locations-Header'
+import HeaderTop from './HeaderTop'
+import Header from './Header'
 import Locations from './Locations'
 import Home from './Home'
 import Posts from './Posts'
@@ -29,22 +30,30 @@ const App = () => {
                 <Route
                   key="posts"
                   path={`/locations/${region.code}`}
-                  element={<Posts key={region.id} region={region} />}
+                  element={
+                    <div>
+                      <Header regions={regions} />
+                      <Posts key={region.id} region={region} />
+                    </div>
+                  }
                 />
               )
             })
           : null}
         {/* LOCATIONS PAGE */}
-        <Route
-          key="locations"
-          path="/locations"
-          element={
-            <div>
-              <LocationsHeader />
-              <Locations />
-            </div>
-          }
-        />
+        {regions ? (
+          <Route
+            key="locations"
+            path="/locations"
+            element={
+              <div>
+                <HeaderTop regions={regions} />
+                <Locations regions={regions} />
+              </div>
+            }
+          />
+        ) : null}
+
         {/* HOME PAGE */}
         <Route key="home" path="/" element={<Home />} />
       </Routes>

@@ -1,6 +1,5 @@
 import React from 'react'
 
-import Header from './Header'
 import Post from './Post'
 import { useEffect, useState } from 'react'
 import { getRegions, getPostsByRegionCode } from '../apiClient'
@@ -26,11 +25,10 @@ function Posts(props) {
   //JSX
   return (
     <div>
-      <Header />
       {posts
         ? posts.map((post) => {
             return (
-              <div key="post-div" className="display-posts">
+              <div key={post.postId} className="display-posts">
                 <Post
                   key={post.postId}
                   post={post}

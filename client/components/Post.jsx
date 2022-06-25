@@ -5,9 +5,9 @@ import { getPostsByRegionCode, updatePostClicked } from '../apiClient'
 
 function Post(props) {
   const { post, handlePostsUpdate } = props
-  useEffect(() => {
-    console.log(post)
-  }, [])
+  // useEffect(() => {
+  //   console.log(post)
+  // }, [])
 
   const [imageNum, setImageNum] = useState(0)
 
@@ -52,6 +52,10 @@ function Post(props) {
     })
   }, [reliabClicked])
 
+  function handleImageClick(e) {
+    e.preventDefault()
+  }
+
   return (
     <div className="each-post">
       {/* Post - images */}
@@ -60,7 +64,12 @@ function Post(props) {
           <i className="fa-solid fa-caret-left"></i>
         </button>
         <div className="post-img-div">
-          <img src={post.postImages[imageNum]} alt="post" />
+          <img
+            src={post.postImages[imageNum]}
+            alt="post"
+            onMouseDown={handleImageClick}
+            onContextMenu={handleImageClick}
+          />
         </div>
         <button onMouseDown={handleNextClick}>
           <i className="fa-solid fa-caret-right"></i>
@@ -68,9 +77,17 @@ function Post(props) {
       </div>
 
       {/* Post - Reliability Button */}
-      <div className="reliab-div" onClick={handleReliabClick}>
-        {reliabClicked && <i class="fa-solid fa-thumbs-up"></i>}
-        {!reliabClicked && <i class="fa-regular fa-thumbs-up"></i>}
+      <div className="reliab-div">
+        {reliabClicked && (
+          <div className="fa-button" onClick={handleReliabClick}>
+            <i className="fa-solid fa-thumbs-up"></i>
+          </div>
+        )}
+        {!reliabClicked && (
+          <div className="fa-button" onClick={handleReliabClick}>
+            <i className="fa-regular fa-thumbs-up"></i>
+          </div>
+        )}
       </div>
 
       {/* Post - Details */}
