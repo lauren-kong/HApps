@@ -1,20 +1,51 @@
 import React from 'react'
-
 import { Link } from 'react-router-dom'
+import Clock from 'react-live-clock'
 
 import RegionDropdown from './RegionDropdown'
 
 function HeaderLogo(props) {
-  const { regions } = props
+  const { regions, color } = props
+
+  // console.log(color)
+
   return (
-    <div className="header-top-inner">
-      <div className="header-logo-div">
+    <div className={`header-top-inner ${color}`}>
+      <div className="header-top-left"></div>
+      <div className="header-top-mid">
         <Link to="/locations">
-          <img src="/images/happs-logo.png" alt="logo" className="logo-img" />
+          <img
+            src="/images/happs-logo-dark.png"
+            alt="logo"
+            className="logo-img"
+          />
         </Link>
       </div>
+      {/* 
+      <div className="header-bottom-left">
+        <div className="clock">
+          <Clock
+            format={'dddd DD MMMM YYYY'}
+            ticking={true}
+            timezone={'NZ'}
+            className="clock-day"
+          />
+          <Clock
+            format={'DD MMMM YYYY'}
+            ticking={true}
+            timezone={'NZ'}
+            className="clock-date"
+          />
+          <Clock
+            format={'h:mm a'}
+            ticking={true}
+            timezone={'NZ'}
+            className="clock-time"
+          />
+        </div>
+      </div> */}
 
-      <div className="region-dropdown">
+      <div className="header-top-right">
         <RegionDropdown regions={regions} />
       </div>
 

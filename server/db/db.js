@@ -7,6 +7,7 @@ module.exports = {
   getPostsByRegionCode,
   updatePostClicked,
   updateReliabCount,
+  getDistrictsByRegionCode,
 }
 
 function getRegions(db = connection) {
@@ -41,4 +42,8 @@ function updatePostClicked(id, bool, db = connection) {
 
 function updateReliabCount(id, num, db = connection) {
   return db('posts').update({ reliability: num }).where({ id })
+}
+
+function getDistrictsByRegionCode(regionCode, db = connection) {
+  return db('districts').select().where({ regionCode })
 }

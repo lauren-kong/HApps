@@ -45,3 +45,15 @@ export function updatePostClicked(id, bool) {
       console.error(err)
     })
 }
+
+export function getDistrictsByRegionCode(regionCode) {
+  return request
+    .get(`${url}/${regionCode}/districts`)
+    .then((res) => {
+      console.log(res.body)
+      return res.body
+    })
+    .catch((err) => {
+      console.error(err)
+    })
+}

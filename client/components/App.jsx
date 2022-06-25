@@ -6,7 +6,7 @@ import Header from './Header'
 import Locations from './Locations'
 import Home from './Home'
 import Posts from './Posts'
-
+import ClockDate from './ClockDate'
 import { Routes, Route } from 'react-router-dom'
 
 const App = () => {
@@ -31,10 +31,17 @@ const App = () => {
                   key="posts"
                   path={`/locations/${region.code}`}
                   element={
-                    <div>
-                      <Header regions={regions} />
-                      <Posts key={region.id} region={region} />
-                    </div>
+                    <>
+                      <ClockDate />
+                      <div className="POST_MAINS">
+                        <Header
+                          regions={regions}
+                          currentRegion={region}
+                          color={'white'}
+                        />
+                        <Posts key={region.id} region={region} />
+                      </div>
+                    </>
                   }
                 />
               )
@@ -47,7 +54,7 @@ const App = () => {
             path="/locations"
             element={
               <div>
-                <HeaderTop regions={regions} />
+                <HeaderTop regions={regions} color={'main'} />
                 <Locations regions={regions} />
               </div>
             }

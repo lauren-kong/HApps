@@ -24,7 +24,8 @@ function Posts(props) {
 
   //JSX
   return (
-    <div>
+    <div id="POSTS">
+      <div className="ghost-div"></div>
       {posts
         ? posts.map((post) => {
             return (

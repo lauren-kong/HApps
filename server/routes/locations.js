@@ -2,18 +2,13 @@ const express = require('express')
 
 const router = express.Router()
 
-const {
-  getPostsByRegionCode,
-  getRegions,
-  updatePostClicked,
-  updateReliabCount,
-} = require('../db/db')
+const db = require('../db/db')
 
 // GET /v1/locations/clicked/:postId/:reliabNum
 router.patch('/clicked/:postId/reliab/:reliabNum', (req, res) => {
   const id = req.params.postId
   const num = req.params.reliabNum
-  updateReliabCount(id, num).then((response) => {
+  db.updateReliabCount(id, num).then((response) => {
     res.json(response)
   })
 })
@@ -22,15 +17,27 @@ router.patch('/clicked/:postId/reliab/:reliabNum', (req, res) => {
 router.patch('/clicked/:postId/:isClicked', (req, res) => {
   const id = req.params.postId
   const bool = req.params.isClicked
-  updatePostClicked(id, bool).then((response) => {
+  db.updatePostClicked(id, bool).then((response) => {
     res.json(response)
   })
+})
+
+// GET /v1/locations/:regionCode/districts
+router.get('/:regionCode/districts', (req, res) => {
+  const regioncode = req.params.regionCode
+  db.getDistrictsByRegionCode(regioncode)
+    .then((districts) => {
+      res.json(districts)
+    })
+    .catch((err) => {
+      res.status(500).send(err.message)
+    })
 })
 
 // GET /v1/locations/:regionCode
 router.get('/:regionCode', (req, res) => {
   const regioncode = req.params.regionCode
-  getPostsByRegionCode(regioncode)
+  db.getPostsByRegionCode(regioncode)
     .then((posts) => {
       res.json(posts)
     })
@@ -41,7 +48,7 @@ router.get('/:regionCode', (req, res) => {
 
 // GET /v1/locations
 router.get('/', (req, res) => {
-  getRegions()
+  db.getRegions()
     .then((regions) => {
       res.json(regions)
     })
