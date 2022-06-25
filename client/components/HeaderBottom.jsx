@@ -1,14 +1,16 @@
 import React from 'react'
 import { useEffect, useState } from 'react'
+import { Link } from 'react-router-dom'
 
 import DistrictsDropdown from './DistrictsDropdown'
 
 import { getDistrictsByRegionCode } from '../apiClient'
 
 function HeaderBottom(props) {
-  const { currentRegion } = props
+  const { currentRegion, currentDistrict } = props
   const [districts, setDistricts] = useState(null)
 
+  // console.log(currentDistrict)
   // console.log(currentRegion)
 
   useEffect(() => {
@@ -43,7 +45,17 @@ function HeaderBottom(props) {
         <div className="header-bottom-districts-and-button">
           {districts ? <DistrictsDropdown districts={districts} /> : null}
           <div className="share-event-button-div">
-            <button>Share Event</button>
+            {currentDistrict ? (
+              <Link
+                to={`/locations/${currentRegion.code}/${currentDistrict.code}/addPost`}
+              >
+                <button>Share Event</button>
+              </Link>
+            ) : (
+              <Link to={`/locations/${currentRegion.code}/addPost`}>
+                <button>Share Event</button>
+              </Link>
+            )}
           </div>
         </div>
       </div>

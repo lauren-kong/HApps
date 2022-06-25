@@ -1,7 +1,11 @@
-import React from 'react'
+import React, { useEffect } from 'react'
 import Clock from 'react-live-clock'
 
 function ClockDate(props) {
+  // useEffect(() => {
+  //   console.log('Im here!')
+  // }, [])
+
   return (
     <div className="clock">
       <Clock

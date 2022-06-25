@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react'
 import { getRegions, getPostsByRegionCode } from '../apiClient'
 
+import AddPost from './AddPost'
 import HeaderTop from './HeaderTop'
 import Header from './Header'
 import Locations from './Locations'
@@ -23,6 +24,31 @@ const App = () => {
   return (
     <div className="app">
       <Routes>
+        {/* ADDPOST PAGE */}
+        {regions
+          ? regions.map((region) => {
+              return (
+                <Route
+                  key="add-post"
+                  path={`/locations/${region.code}/addPost`}
+                  element={
+                    <>
+                      <ClockDate />
+                      <div className="ADDPOST-MAINS">
+                        <Header
+                          regions={regions}
+                          currentRegion={region}
+                          color={'white'}
+                        />
+                        <AddPost key={region.id} region={region} />
+                      </div>
+                    </>
+                  }
+                />
+              )
+            })
+          : null}
+
         {/* POSTS PAGE */}
         {regions
           ? regions.map((region) => {

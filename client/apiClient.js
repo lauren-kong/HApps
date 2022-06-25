@@ -50,7 +50,7 @@ export function getDistrictsByRegionCode(regionCode) {
   return request
     .get(`${url}/${regionCode}/districts`)
     .then((res) => {
-      console.log(res.body)
+      // console.log(res.body)
       return res.body
     })
     .catch((err) => {

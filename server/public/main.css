@@ -43,7 +43,9 @@ body {
 } */
 
 /*---------------HEADER----------------*/
-
+.outer-header {
+  font-size: 0.8rem;
+}
 .header-top-inner {
   display: flex;
   flex-direction: row;
@@ -53,7 +55,7 @@ body {
   height: 120px;
   position: fixed;
   top: 0;
-  z-index: 100;
+  z-index: 120;
 }
 
 .header-top-inner {
@@ -85,6 +87,7 @@ body {
 #dropdown-basic {
   border: none;
   background-color: var(--main-color-main4-transparent);
+  z-index: 100;
 }
 #dropdown-menu {
   background-color: rgba(255, 254, 254, 0.67);
@@ -155,7 +158,7 @@ body {
   /* color: rgba(255, 255, 255, 0.99); */
 }
 
-.share-event-button-div > button {
+.share-event-button-div button {
   background-color: var(--main-color-main3-transparent);
   border: none;
   border-radius: 10px;
@@ -184,8 +187,7 @@ body {
   color: var(--main-color-main3);
 }
 
-.dropdown-menu,
-drop .dropdown-menu {
+.dropdown-menu {
   width: 250px;
 }
 
@@ -193,6 +195,11 @@ drop .dropdown-menu {
   background-color: white;
   border: 0.2px solid var(--main-color-main4-transparent);
   color: var(--main-color-main3);
+}
+
+.below-header {
+  margin-top: 450px;
+  z-index: 0;
 }
 
 /*---------------LOCATIONS------------------*/
@@ -264,10 +271,6 @@ drop .dropdown-menu {
   height: 300px;
   z-index: 90;
   background-color: white;
-}
-#POSTS {
-  margin-top: 450px;
-  z-index: 0;
 }
 
 .POST_MAINS {
@@ -390,3 +393,5 @@ drop .dropdown-menu {
 .post-time {
   color: gray;
 }
+
+/*---------------ADD POST------------------*/
