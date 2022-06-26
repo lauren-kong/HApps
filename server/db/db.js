@@ -8,6 +8,7 @@ module.exports = {
   updatePostClicked,
   updateReliabCount,
   getDistrictsByRegionCode,
+  getDistrictInfoByName,
   addPost,
 }
 
@@ -49,6 +50,10 @@ function getDistrictsByRegionCode(regionCode, db = connection) {
   return db('districts').select().where({ regionCode })
 }
 
+function getDistrictInfoByName(name, db = connection) {
+  return db('districts').select().where({ name }).first()
+}
+
 function addPost(newPost, db = connection) {
   const {
     password,
@@ -60,7 +65,7 @@ function addPost(newPost, db = connection) {
     postedTime,
     description,
   } = newPost
-  return db('post').insert({
+  return db('posts').insert({
     password,
     regionCode,
     districtCode,

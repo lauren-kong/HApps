@@ -2,7 +2,7 @@
 import request from 'superagent'
 // eslint-disable-next-line no-unused-vars
 const url = '/api/v1/locations'
-const filesURL = '/api/v1/files'
+const filesURL = '/api/v1/upload'
 
 export function getRegions() {
   return request
@@ -59,12 +59,24 @@ export function getDistrictsByRegionCode(regionCode) {
     })
 }
 
+export function getDistrictInfoByName(districtName) {
+  return request
+    .get(`${url}/${districtName}`)
+    .then((res) => {
+      console.log(res.body)
+      return res.body
+    })
+    .catch((err) => {
+      console.error(err)
+    })
+}
+
 export function addPost(newPost) {
   return request
     .post(`${filesURL}`)
     .send(newPost)
     .then((res) => {
-      console.log(res.body)
+      // console.log(res)
       return res.body
     })
     .catch((err) => {

@@ -1,13 +1,20 @@
 import React from 'react'
 import { useEffect, useState, useRef } from 'react'
+import { Link } from 'react-router-dom'
 
-import { getDistrictsByRegionCode, addPost } from '../apiClient'
+import {
+  getDistrictsByRegionCode,
+  addPost,
+  getPostsByRegionCode,
+  getDistrictInfoByName,
+} from '../apiClient'
 
 function AddPost(props) {
   // useEffect(() => {},[])
 
   const { region } = props
   const [images, setImages] = useState([])
+  const imageNames = useRef()
   const fileInputRef = useRef()
   const textRef = useRef()
   const [previewImageNum, setPreviewImageNum] = useState(0)
@@ -35,8 +42,8 @@ function AddPost(props) {
     e.preventDefault()
     const filesList = e.target.files
     const filesArr = []
-    console.log(filesList)
-    console.log(filesList.length)
+    // console.log(filesList)
+    // console.log(filesList.length)
     for (let i = 0; i < filesList.length; i++) {
       if (filesList[i] && filesList[i].type.substr(0, 5)) {
         filesArr.push(filesList[i])
@@ -45,6 +52,17 @@ function AddPost(props) {
     setImages([...images, ...filesArr])
   }
 
+  useEffect(() => {
+    const names = []
+    if (images.length > 0) {
+      images.forEach((image) => {
+        names.push(`/images/${image.name}`)
+      })
+    }
+    imageNames.current = names
+  }, [images])
+
+  // FileReader for Each Image  -> for preview
   useEffect(() => {
     const src = []
     if (images.length > 0) {
@@ -98,12 +116,15 @@ function AddPost(props) {
     setPreview(null)
     setPreviewImageNum(0)
     previews.current = null
+    imageNames.current = null
   }
 
+  ///// START HERE!!!!
   const [newPostDistrict, setNewPostDistrict] = useState('')
-
+  const newPostDistrictCode = useRef('')
   useEffect(() => {
     districtsList && setNewPostDistrict(districtsList[0].name)
+    newPostDistrict && geDist
   }, [districtsList])
 
   function handleDistrictChange(e) {
@@ -140,7 +161,6 @@ function AddPost(props) {
     if (
       images.length > 0 &&
       newPostDistrict &&
-      newPostLocation &&
       newPostEvent &&
       newPostDescription &&
       newPostPassword
@@ -148,17 +168,20 @@ function AddPost(props) {
       const today = new Date()
       const newPost = {
         password: newPostPassword,
-        regionCode: region.name,
+        regionCode: region.code,
         districtCode: newPostDistrict,
-        postImages: JSON.stringify(previews.current),
+        postImages: JSON.stringify(imageNames.current),
         eventName: newPostEvent,
         location: newPostLocation,
         postedTime: today.toLocaleTimeString('en-US'),
         description: newPostDescription,
       }
-      addPost(newPost).then((res) => {
-        console.log(res)
+      addPost(newPost).then((newId) => {
+        console.log(newId)
         console.log('submitted')
+        getPostsByRegionCode(region.code).then((posts) => {
+          console.log(posts)
+        })
       })
     }
   }
@@ -281,7 +304,9 @@ function AddPost(props) {
             placeholder="password"
             onChange={handlePasswordChange}
           />
-          <button onClick={handleFormSubmit}>Post</button>
+          <form action={`/locations/${region.code}`}>
+            <button onClick={handleFormSubmit}>Post</button>
+          </form>
         </div>
       </div>
     </div>

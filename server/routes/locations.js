@@ -4,7 +4,19 @@ const router = express.Router()
 
 const db = require('../db/db')
 
-// GET /v1/locations/clicked/:postId/:reliabNum
+// GET /v1/locations/:districtsName
+router.get('/:districtName', (req, res) => {
+  const nameOfDist = req.params.districtName
+  db.getDistrictInfoByName(nameOfDist)
+    .then((response) => {
+      res.json(response)
+    })
+    .catch((err) => {
+      res.status(500).send(err.message)
+    })
+})
+
+// PATCH /v1/locations/clicked/:postId/:reliabNum
 router.patch('/clicked/:postId/reliab/:reliabNum', (req, res) => {
   const id = req.params.postId
   const num = req.params.reliabNum
@@ -17,7 +29,7 @@ router.patch('/clicked/:postId/reliab/:reliabNum', (req, res) => {
     })
 })
 
-// GET /v1/locations/clicked/:postId/:isClicked
+// PATCH /v1/locations/clicked/:postId/:isClicked
 router.patch('/clicked/:postId/:isClicked', (req, res) => {
   const id = req.params.postId
   const bool = req.params.isClicked

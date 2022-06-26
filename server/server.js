@@ -2,7 +2,7 @@ const path = require('path')
 const express = require('express')
 
 const locations = require('./routes/locations')
-const uploadFiles = require('./routes/uploadFiles')
+const upload = require('./routes/upload')
 const cors = require('cors')
 const { resolve } = require('path')
 
@@ -13,7 +13,7 @@ server.use(cors('*'))
 server.use(express.urlencoded({ extended: true }))
 
 server.use('/api/v1/locations', locations)
-server.use('/api/v1/files', uploadFiles)
+server.use('/api/v1/upload', upload)
 
 server.get('*', (req, res) => {
   res.sendFile(path.resolve('server/public/index.html'))
