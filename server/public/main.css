@@ -4,6 +4,7 @@
   --main-color-main3: #14465e;
   --main-color-main3-transparent: #14475eba;
   --main-color-main4-transparent: rgb(65, 166, 213, 0.55);
+  --main-color-input-focus: rgba(161, 188, 200, 0.327);
 
   --main-font1: 'Archivo Black', sans-serif;
   --main-font2: 'Lexend Deca', sans-serif;
@@ -47,6 +48,8 @@ body {
   font-size: 0.8rem;
 }
 .header-top-inner {
+  background-color: var(--main-color-main1);
+
   display: flex;
   flex-direction: row;
   /* justify-content: space-between; */
@@ -56,14 +59,11 @@ body {
   position: fixed;
   top: 0;
   z-index: 120;
-}
-
-.header-top-inner {
-  background-color: var(--main-color-main1);
+  text-align: center;
 }
 
 .header-top-left {
-  width: 483px;
+  flex: 1;
 }
 
 .header-top-mid {
@@ -81,6 +81,7 @@ body {
 }
 
 .header-top-right {
+  flex: 1;
   margin: auto;
 }
 
@@ -119,12 +120,15 @@ body {
   align-items: center;
 }
 .header-bottom-left {
-  width: 483px;
+  flex: 1;
   display: flex;
   flex-direction: column;
   justify-content: space-around;
   /* align-items: center; */
   height: 100%;
+}
+.header-bottom-right {
+  flex: 1;
 }
 
 .clock {
@@ -268,13 +272,14 @@ body {
   position: fixed;
   top: 0;
   width: 100%;
-  height: 300px;
+  height: 340px;
   z-index: 90;
   background-color: white;
 }
 
 .POST_MAINS {
   font-size: 0.8rem;
+  margin-bottom: 300px;
 }
 
 .display-posts > div {
@@ -395,3 +400,164 @@ body {
 }
 
 /*---------------ADD POST------------------*/
+
+.add-form-main {
+  display: flex;
+  flex-direction: row;
+  width: 800px;
+  height: 300px;
+  margin-left: auto;
+  margin-right: auto;
+  position: relative;
+  justify-content: space-between;
+}
+
+.add-form-main > div {
+  text-align: center;
+}
+
+.add-photo-div {
+  width: 300px;
+  height: 300px;
+}
+.add-photos-button {
+  background-color: var(--main-color-main1);
+  border: none;
+  color: white;
+  font-size: 18px;
+  width: 100%;
+  height: 100%;
+  cursor: pointer;
+}
+
+.preview-overall {
+  position: relative;
+}
+
+.show-image-number {
+  width: 40px;
+  height: 40px;
+  position: absolute;
+  top: -30px;
+  color: var(--main-color-main3-transparent);
+}
+
+.preview-div {
+  position: relative;
+  border: none;
+}
+.preview-div > div {
+  width: 100%;
+  height: 300px;
+}
+.preview-div > div > img {
+  width: 100%;
+  height: 100%;
+  object-fit: contain;
+  border: none;
+}
+
+.preview-div > button {
+  position: absolute;
+  /* top: 300px; */
+  width: 40px;
+  height: 40px;
+  background-color: rgba(206, 216, 241, 0.515);
+  color: white;
+  border: none;
+  border-radius: 5px;
+}
+.preview-div > button:first-child {
+  left: 5px;
+  top: 130px;
+}
+
+.preview-div > button:last-child {
+  right: 5px;
+  top: 130px;
+}
+
+.reset-photos-div {
+  position: absolute;
+  top: 320px;
+  left: 100px;
+}
+.reset-photos-button {
+  width: 100px;
+  height: 40px;
+  background-color: var(--main-color-main1);
+  border: none;
+  border-radius: 5px;
+  color: white;
+  font-size: 12px;
+}
+.other-form-and-submit {
+  width: 400px;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+}
+
+.other-form-main {
+  width: 100%;
+  border: 0.25px solid var(--main-color-main3);
+  margin-left: auto;
+  margin-right: auto;
+}
+
+.add-post-districts-div {
+  width: 100%;
+}
+
+.add-post-districts-select,
+.add-post-district-option,
+.other-form-main input,
+.other-form-main textarea {
+  width: 100%;
+  height: 50px;
+  padding-left: 10px;
+  border: none;
+  border-bottom: var(--light-border-style);
+  resize: none;
+  margin-left: auto;
+  margin-right: auto;
+}
+.description-div {
+  height: 100px;
+  width: 100%;
+}
+.description-input {
+  width: 100%;
+  height: 100% !important;
+  text-overflow: hidden;
+  word-wrap: break-word;
+  word-break: break-all;
+  height: 80px;
+}
+
+select:focus,
+input:focus,
+textarea:focus {
+  border: 0;
+  background-color: var(--main-color-input-focus);
+  padding: none;
+  outline: none;
+}
+.password-and-button {
+  display: flex;
+  flex-direction: row;
+  width: 400px;
+  height: 45px;
+  justify-content: space-between;
+}
+
+.password-and-button > input {
+  width: 250px;
+}
+.password-and-button > button {
+  width: 100px;
+  background-color: var(--main-color-main3-transparent);
+  border: none;
+  border-radius: 10px;
+  color: white;
+}
