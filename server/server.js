@@ -13,7 +13,7 @@ server.use(cors('*'))
 server.use(express.urlencoded({ extended: true }))
 
 server.use('/api/v1/locations', locations)
-server.use('/api/v1/fileUpload', uploadFiles)
+server.use('/api/v1/files', uploadFiles)
 
 server.get('*', (req, res) => {
   res.sendFile(path.resolve('server/public/index.html'))

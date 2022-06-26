@@ -1,7 +1,7 @@
 import React from 'react'
 import { useEffect, useState, useRef } from 'react'
 
-import { getDistrictsByRegionCode } from '../apiClient'
+import { getDistrictsByRegionCode, addPost } from '../apiClient'
 
 function AddPost(props) {
   // useEffect(() => {},[])
@@ -11,7 +11,16 @@ function AddPost(props) {
   const fileInputRef = useRef()
   const textRef = useRef()
   const [previewImageNum, setPreviewImageNum] = useState(0)
+  const previews = useRef()
   const [preview, setPreview] = useState(null)
+
+  const [districtsList, setDistrictsList] = useState(null)
+  // console.log(region)
+  useEffect(() => {
+    getDistrictsByRegionCode(region.code).then((districts) => {
+      setDistrictsList(districts)
+    })
+  }, [])
 
   useEffect(() => {
     textRef.current.focus()
@@ -37,15 +46,33 @@ function AddPost(props) {
   }
 
   useEffect(() => {
-    console.log(images)
+    const src = []
     if (images.length > 0) {
-      const reader = new FileReader()
-      reader.onloadend = () => {
-        setPreview(reader.result)
+      images.forEach((image) => {
+        const readerAll = new FileReader()
+        readerAll.onloadend = () => {
+          src.push(readerAll.result)
+        }
+        readerAll.readAsDataURL(image)
+      })
+      const readerOne = new FileReader()
+      readerOne.onloadend = () => {
+        setPreview(readerOne.result)
       }
-      reader.readAsDataURL(images[previewImageNum])
+      readerOne.readAsDataURL(images[previewImageNum])
     }
-  }, [images, previewImageNum])
+    previews.current = src
+  }, [images])
+
+  useEffect(() => {
+    if (images.length > 0) {
+      const readerOne = new FileReader()
+      readerOne.onloadend = () => {
+        setPreview(readerOne.result)
+      }
+      readerOne.readAsDataURL(images[previewImageNum])
+    }
+  }, [previewImageNum])
 
   function handlePrevClick(e) {
     e.preventDefault()
@@ -65,24 +92,28 @@ function AddPost(props) {
     e.preventDefault()
   }
 
-  function reChoosePhotoHandler(e) {
+  function resetPhotosHandler(e) {
     e.preventDefault()
     setImages([])
     setPreview(null)
+    setPreviewImageNum(0)
+    previews.current = null
   }
 
-  const [districtsList, setDistrictsList] = useState(null)
-  // console.log(region)
-  useEffect(() => {
-    getDistrictsByRegionCode(region.code).then((districts) => {
-      setDistrictsList(districts)
-    })
-  }, [])
-
   const [newPostDistrict, setNewPostDistrict] = useState('')
+
+  useEffect(() => {
+    districtsList && setNewPostDistrict(districtsList[0].name)
+  }, [districtsList])
+
   function handleDistrictChange(e) {
     // console.log(e.target.value)
     setNewPostDistrict(e.target.value)
+  }
+
+  const [newPostEvent, setNewPostEvent] = useState(null)
+  function handleEventChange(e) {
+    setNewPostEvent(e.target.value)
   }
 
   const [newPostLocation, setNewPostLocation] = useState(null)
@@ -95,15 +126,47 @@ function AddPost(props) {
     setNewPostDescription(e.target.value)
   }
 
+  const [newPostPassword, setNewPostPassword] = useState(null)
+  function handlePasswordChange(e) {
+    setNewPostPassword(e.target.value)
+  }
+
   function handleFormSubmit(e) {
-    e.preventDefault()
-    console.log('submitted')
+    console.log('district: ', newPostDistrict)
+    console.log('location: ', newPostLocation)
+    console.log('event name: ', newPostEvent)
+    console.log('description: ', newPostDescription)
+    console.log('password: ', newPostPassword)
+    if (
+      images.length > 0 &&
+      newPostDistrict &&
+      newPostLocation &&
+      newPostEvent &&
+      newPostDescription &&
+      newPostPassword
+    ) {
+      const today = new Date()
+      const newPost = {
+        password: newPostPassword,
+        regionCode: region.name,
+        districtCode: newPostDistrict,
+        postImages: JSON.stringify(previews.current),
+        eventName: newPostEvent,
+        location: newPostLocation,
+        postedTime: today.toLocaleTimeString('en-US'),
+        description: newPostDescription,
+      }
+      addPost(newPost).then((res) => {
+        console.log(res)
+        console.log('submitted')
+      })
+    }
   }
 
   return (
     <div className="below-header add-form-main">
       <div className="add-photo-div">
-        {!preview ? (
+        {!images || images.length === 0 ? (
           <>
             <button
               className="add-photos-button"
@@ -122,7 +185,7 @@ function AddPost(props) {
           </>
         ) : null}
 
-        {preview ? (
+        {images && images.length > 0 ? (
           <div className="preview-overall">
             <div className="show-image-number">
               {previewImageNum + 1}/{images.length}
@@ -146,7 +209,7 @@ function AddPost(props) {
             </div>
             <div className="reset-photos-div">
               <button
-                onClick={reChoosePhotoHandler}
+                onClick={resetPhotosHandler}
                 className="reset-photos-button"
               >
                 Reset Photos
@@ -179,11 +242,22 @@ function AddPost(props) {
             </select>
             <div>
               <input
+                className="event-name"
+                required
+                type="text"
+                // value={newPostEvent}
+                placeholder="Event Name"
+                onChange={handleEventChange}
+              />
+            </div>
+            <div>
+              <input
                 className="location-input"
                 required
                 type="text"
-                value={newPostLocation}
+                // value={newPostLocation}
                 placeholder="Location Details"
+                onChange={handleLocationChange}
               />
             </div>
             <div className="description-div">
@@ -191,8 +265,9 @@ function AddPost(props) {
                 ref={textRef}
                 className="description-input"
                 type="textarea"
-                value={newPostDescription}
+                // value={newPostDescription}
                 placeholder="Text..."
+                onChange={handleDescriptionChange}
               />
             </div>
           </div>
@@ -202,10 +277,11 @@ function AddPost(props) {
             className="password-input"
             required
             type="password"
-            value={newPostDescription}
+            // value={newPostPassword}
             placeholder="password"
+            onChange={handlePasswordChange}
           />
-          <button>Post</button>
+          <button onClick={handleFormSubmit}>Post</button>
         </div>
       </div>
     </div>

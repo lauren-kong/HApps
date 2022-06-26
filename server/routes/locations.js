@@ -8,18 +8,26 @@ const db = require('../db/db')
 router.patch('/clicked/:postId/reliab/:reliabNum', (req, res) => {
   const id = req.params.postId
   const num = req.params.reliabNum
-  db.updateReliabCount(id, num).then((response) => {
-    res.json(response)
-  })
+  db.updateReliabCount(id, num)
+    .then((response) => {
+      res.json(response)
+    })
+    .catch((err) => {
+      res.status(500).send(err.message)
+    })
 })
 
 // GET /v1/locations/clicked/:postId/:isClicked
 router.patch('/clicked/:postId/:isClicked', (req, res) => {
   const id = req.params.postId
   const bool = req.params.isClicked
-  db.updatePostClicked(id, bool).then((response) => {
-    res.json(response)
-  })
+  db.updatePostClicked(id, bool)
+    .then((response) => {
+      res.json(response)
+    })
+    .catch((err) => {
+      res.status(500).send(err.message)
+    })
 })
 
 // GET /v1/locations/:regionCode/districts

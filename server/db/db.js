@@ -8,6 +8,7 @@ module.exports = {
   updatePostClicked,
   updateReliabCount,
   getDistrictsByRegionCode,
+  addPost,
 }
 
 function getRegions(db = connection) {
@@ -46,4 +47,29 @@ function updateReliabCount(id, num, db = connection) {
 
 function getDistrictsByRegionCode(regionCode, db = connection) {
   return db('districts').select().where({ regionCode })
+}
+
+function addPost(newPost, db = connection) {
+  const {
+    password,
+    regionCode,
+    districtCode,
+    postImages,
+    eventName,
+    location,
+    postedTime,
+    description,
+  } = newPost
+  return db('post').insert({
+    password,
+    regionCode,
+    districtCode,
+    postImages,
+    eventName,
+    location,
+    postedTime,
+    description,
+    reliability: 0,
+    clicked: false,
+  })
 }

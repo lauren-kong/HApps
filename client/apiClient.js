@@ -59,4 +59,15 @@ export function getDistrictsByRegionCode(regionCode) {
     })
 }
 
-// export function uploadFiles() {}
+export function addPost(newPost) {
+  return request
+    .post(`${filesURL}`)
+    .send(newPost)
+    .then((res) => {
+      console.log(res.body)
+      return res.body
+    })
+    .catch((err) => {
+      console.error(err)
+    })
+}
