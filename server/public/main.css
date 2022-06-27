@@ -547,15 +547,22 @@ textarea:focus {
   display: flex;
   flex-direction: row;
   width: 400px;
-  height: 45px;
+  height: 40px;
   justify-content: space-between;
 }
 
 .password-and-button > input {
   width: 250px;
 }
-.password-and-button > button {
+
+.password-and-button > form {
+  display: block;
   width: 100px;
+  height: 100%;
+}
+.password-and-button button {
+  width: 100px;
+  height: 100%;
   background-color: var(--main-color-main3-transparent);
   border: none;
   border-radius: 10px;

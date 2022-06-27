@@ -61,9 +61,8 @@ export function getDistrictsByRegionCode(regionCode) {
 
 export function getDistrictInfoByName(districtName) {
   return request
-    .get(`${url}/${districtName}`)
+    .get(`${url}/district/${districtName}`)
     .then((res) => {
-      console.log(res.body)
       return res.body
     })
     .catch((err) => {

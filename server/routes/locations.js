@@ -4,8 +4,8 @@ const router = express.Router()
 
 const db = require('../db/db')
 
-// GET /v1/locations/:districtsName
-router.get('/:districtName', (req, res) => {
+// GET /v1/locations/district/:districtsName
+router.get('/district/:districtName', (req, res) => {
   const nameOfDist = req.params.districtName
   db.getDistrictInfoByName(nameOfDist)
     .then((response) => {

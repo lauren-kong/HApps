@@ -124,13 +124,18 @@ function AddPost(props) {
   const newPostDistrictCode = useRef('')
   useEffect(() => {
     districtsList && setNewPostDistrict(districtsList[0].name)
-    newPostDistrict && geDist
   }, [districtsList])
 
   function handleDistrictChange(e) {
     // console.log(e.target.value)
     setNewPostDistrict(e.target.value)
   }
+
+  useEffect(() => {
+    getDistrictInfoByName(newPostDistrict).then((distInfo) => {
+      newPostDistrictCode.current = distInfo.code
+    })
+  }, [newPostDistrict])
 
   const [newPostEvent, setNewPostEvent] = useState(null)
   function handleEventChange(e) {
@@ -169,7 +174,7 @@ function AddPost(props) {
       const newPost = {
         password: newPostPassword,
         regionCode: region.code,
-        districtCode: newPostDistrict,
+        districtCode: newPostDistrictCode.current,
         postImages: JSON.stringify(imageNames.current),
         eventName: newPostEvent,
         location: newPostLocation,
