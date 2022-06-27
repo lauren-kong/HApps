@@ -11,6 +11,7 @@ module.exports = {
   getDistrictInfoByName,
   addPost,
   getPostById,
+  deletePostById,
 }
 
 function getRegions(db = connection) {
@@ -49,6 +50,10 @@ function updateReliabCount(id, num, db = connection) {
 
 function getPostById(id, db = connection) {
   return db('posts').select().where({ id }).first()
+}
+
+function deletePostById(id, db = connection) {
+  return db('posts').delete().where({ id })
 }
 
 function getDistrictsByRegionCode(regionCode, db = connection) {

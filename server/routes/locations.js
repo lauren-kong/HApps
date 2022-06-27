@@ -6,9 +6,14 @@ const db = require('../db/db')
 
 router.get('/posts/:postId', (req, res) => {
   const id = req.params.postId
-  db.getPostById(id).then((response) => {
-    res.json(response)
-  })
+  console.log('I am here')
+  db.getPostById(id)
+    .then((response) => {
+      res.send(response)
+    })
+    .catch((err) => {
+      res.status(500).send(err.message)
+    })
 })
 
 // GET /v1/locations/district/:districtsName

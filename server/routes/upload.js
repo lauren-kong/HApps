@@ -19,4 +19,16 @@ router.post('/', (req, res) => {
     })
 })
 
+router.get('/post/delete/:id', (req, res) => {
+  const postId = req.params.id
+  db.deletePostById(postId)
+    .then((response) => {
+      console.log(response)
+      res.json(response)
+    })
+    .catch((err) => {
+      res.status(500).send(err.message)
+    })
+})
+
 module.exports = router

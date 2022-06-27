@@ -1,13 +1,18 @@
 import React, { useState } from 'react'
 import { useEffect } from 'react'
-
-import { getPostsByRegionCode, updatePostClicked } from '../apiClient'
+import {
+  getPostsByRegionCode,
+  updatePostClicked,
+  deletePostById,
+} from '../apiClient'
 
 function Post(props) {
   const { post, handlePostsUpdate } = props
   // useEffect(() => {
   //   console.log(post)
   // }, [])
+
+  const [passwordInPrompt, setPasswordInPrompt] = useState(null)
 
   const [imageNum, setImageNum] = useState(0)
 
@@ -56,6 +61,24 @@ function Post(props) {
     e.preventDefault()
   }
 
+  function binButtonClickHandler(e) {
+    e.preventDefault()
+    const current = prompt('Please enter post password')
+    setPasswordInPrompt(current)
+  }
+  useEffect(() => {
+    if (!passwordInPrompt) {
+      return null
+    } else if (passwordInPrompt === post.password) {
+      console.log('need to delete this post')
+      deletePostById(post.postId).then((res) => {
+        console.log(res)
+      })
+    } else {
+      setPasswordInPrompt(prompt('The password is incorrect. Try again'))
+    }
+  }, [passwordInPrompt])
+
   return (
     <div className="each-post">
       {/* Post - images */}
@@ -99,7 +122,9 @@ function Post(props) {
       </div>
 
       <div>
-        <button></button>
+        <button onClick={binButtonClickHandler}>
+          <i className="fa-solid fa-trash-can"></i>
+        </button>
       </div>
     </div>
   )

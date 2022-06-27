@@ -97,6 +97,17 @@ export function addPost(newPost) {
     })
 }
 
+export function deletePostById(id) {
+  return request
+    .get(`${filesURL}/post/delete/${id}`)
+    .then((res) => {
+      return res
+    })
+    .catch((err) => {
+      console.error(err)
+    })
+}
+
 export function uploadImageToCloudinary(data) {
   return Axios.post(cloudinaryEndPoint, data)
     .then((res) => {
@@ -107,3 +118,5 @@ export function uploadImageToCloudinary(data) {
       console.error(err)
     })
 }
+
+export function deleteImageOnCloudinary(data) {}
