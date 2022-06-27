@@ -7,11 +7,14 @@ import {
   addPost,
   getPostsByRegionCode,
   getDistrictInfoByName,
+  uploadImageToCloudinary,
+  getPostById,
 } from '../apiClient'
 
 function AddPost(props) {
   // useEffect(() => {},[])
-
+  const hiddenButton = useRef()
+  const cloudinaryPreset = 'nh01qzjk'
   const { region } = props
   const [images, setImages] = useState([])
   const imageNames = useRef()
@@ -20,6 +23,7 @@ function AddPost(props) {
   const [previewImageNum, setPreviewImageNum] = useState(0)
   const previews = useRef()
   const [preview, setPreview] = useState(null)
+  const [uploadedImages, setUploadedImages] = useState([])
 
   const [districtsList, setDistrictsList] = useState(null)
   // console.log(region)
@@ -52,15 +56,29 @@ function AddPost(props) {
     setImages([...images, ...filesArr])
   }
 
-  useEffect(() => {
-    const names = []
-    if (images.length > 0) {
-      images.forEach((image) => {
-        names.push(`/images/${image.name}`)
-      })
-    }
-    imageNames.current = names
-  }, [images])
+  // useEffect(() => {
+  // const names = []
+  // if (images.length > 0) {
+  //   images.forEach((image) => {
+  //     names.push(`/images/${image.name}`)
+  //   })
+  // }
+  // imageNames.current = names
+  //   const cloudinaryRes = []
+  //   images.map((image) => {
+  //     // console.log(image)
+  //     const formData = new FormData()
+  //     formData.append('file', image)
+  //     formData.append('upload_preset', cloudinaryPreset)
+  //     uploadImageToCloudinary(formData).then((response) => {
+  //       setUploadedImages([...uploadedImages, response])
+  //     })
+  //   })
+  // }, [images])
+
+  // useEffect(() => {
+  //   console.log(uploadedImages)
+  // }, [uploadedImages])
 
   // FileReader for Each Image  -> for preview
   useEffect(() => {
@@ -119,7 +137,6 @@ function AddPost(props) {
     imageNames.current = null
   }
 
-  ///// START HERE!!!!
   const [newPostDistrict, setNewPostDistrict] = useState('')
   const newPostDistrictCode = useRef('')
   useEffect(() => {
@@ -170,12 +187,29 @@ function AddPost(props) {
       newPostDescription &&
       newPostPassword
     ) {
+      const uploadPromises = images.map((image) => {
+        // console.log(image)
+        const formData = new FormData()
+        formData.append('file', image)
+        formData.append('upload_preset', cloudinaryPreset)
+        return uploadImageToCloudinary(formData)
+      })
+
+      Promise.all(uploadPromises).then((values) => {
+        setUploadedImages(values)
+      })
+    }
+  }
+
+  useEffect(() => {
+    if (images.length > 0 && uploadedImages.length === images.length) {
+      console.log(uploadedImages)
       const today = new Date()
       const newPost = {
         password: newPostPassword,
         regionCode: region.code,
         districtCode: newPostDistrictCode.current,
-        postImages: JSON.stringify(imageNames.current),
+        postImages: JSON.stringify(uploadedImages),
         eventName: newPostEvent,
         location: newPostLocation,
         postedTime: today.toLocaleTimeString('en-US'),
@@ -184,12 +218,13 @@ function AddPost(props) {
       addPost(newPost).then((newId) => {
         console.log(newId)
         console.log('submitted')
-        getPostsByRegionCode(region.code).then((posts) => {
-          console.log(posts)
+        getPostById(newId).then((post) => {
+          console.log(post)
+          hiddenButton.current.click()
         })
       })
     }
-  }
+  }, [uploadedImages])
 
   return (
     <div className="below-header add-form-main">
@@ -309,9 +344,10 @@ function AddPost(props) {
             placeholder="password"
             onChange={handlePasswordChange}
           />
-          <form action={`/locations/${region.code}`}>
-            <button onClick={handleFormSubmit}>Post</button>
-          </form>
+          <button onClick={handleFormSubmit}>Post</button>
+          <Link to={`/locations/${region.code}`} ref={hiddenButton}>
+            <button hidden="hidden">Move</button>
+          </Link>
         </div>
       </div>
     </div>

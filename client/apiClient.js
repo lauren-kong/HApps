@@ -1,8 +1,11 @@
 // eslint-disable-next-line no-unused-vars
 import request from 'superagent'
+import Axios from 'axios'
 // eslint-disable-next-line no-unused-vars
 const url = '/api/v1/locations'
 const filesURL = '/api/v1/upload'
+const cloudinaryEndPoint =
+  'https://api.cloudinary.com/v1_1/dvftesn1v/image/upload'
 
 export function getRegions() {
   return request
@@ -47,6 +50,17 @@ export function updatePostClicked(id, bool) {
     })
 }
 
+export function getPostById(id) {
+  return request
+    .get(`${url}/posts/${id}`)
+    .then((res) => {
+      return res.body
+    })
+    .catch((err) => {
+      console.error(err)
+    })
+}
+
 export function getDistrictsByRegionCode(regionCode) {
   return request
     .get(`${url}/${regionCode}/districts`)
@@ -77,6 +91,17 @@ export function addPost(newPost) {
     .then((res) => {
       // console.log(res)
       return res.body
+    })
+    .catch((err) => {
+      console.error(err)
+    })
+}
+
+export function uploadImageToCloudinary(data) {
+  return Axios.post(cloudinaryEndPoint, data)
+    .then((res) => {
+      console.log(res.data)
+      return res.data.url
     })
     .catch((err) => {
       console.error(err)

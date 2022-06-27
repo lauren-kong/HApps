@@ -4,6 +4,13 @@ const router = express.Router()
 
 const db = require('../db/db')
 
+router.get('/posts/:postId', (req, res) => {
+  const id = req.params.postId
+  db.getPostById(id).then((response) => {
+    res.json(response)
+  })
+})
+
 // GET /v1/locations/district/:districtsName
 router.get('/district/:districtName', (req, res) => {
   const nameOfDist = req.params.districtName

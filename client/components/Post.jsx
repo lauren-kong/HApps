@@ -97,6 +97,10 @@ function Post(props) {
         <div className="post-location">{post.location}</div>
         <div className="post-description">{post.description}</div>
       </div>
+
+      <div>
+        <button></button>
+      </div>
     </div>
   )
 }

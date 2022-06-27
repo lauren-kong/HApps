@@ -4,9 +4,7 @@ const router = express.Router()
 
 const db = require('../db/db')
 
-const cloudinary = require('../utils/cloudinary')
-
-//'/api/v1/upload',
+//POST /api/v1/upload
 router.post('/', (req, res) => {
   const newOne = req.body
   console.log(newOne)
