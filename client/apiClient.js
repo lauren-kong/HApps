@@ -4,8 +4,7 @@ import Axios from 'axios'
 // eslint-disable-next-line no-unused-vars
 const url = '/api/v1/locations'
 const filesURL = '/api/v1/upload'
-const cloudinaryEndPoint =
-  'https://api.cloudinary.com/v1_1/dvftesn1v/image/upload'
+const cloudinaryEndPoint = 'https://api.cloudinary.com/v1_1/dvftesn1v/image'
 
 export function getRegions() {
   return request
@@ -97,7 +96,7 @@ export function addPost(newPost) {
     })
 }
 
-export function deletePostById(id) {
+export function deletePost(id) {
   return request
     .get(`${filesURL}/post/delete/${id}`)
     .then((res) => {
@@ -109,14 +108,28 @@ export function deletePostById(id) {
 }
 
 export function uploadImageToCloudinary(data) {
-  return Axios.post(cloudinaryEndPoint, data)
+  return Axios.post(`${cloudinaryEndPoint}/upload`, data)
     .then((res) => {
-      console.log(res.data)
-      return res.data.url
+      // console.log({ url: res.data.url, public_id: res.data.public_id })
+      console.log(res)
+      return {
+        url: res.data.url,
+        publicId: res.data.public_id,
+        signature: res.data.signature,
+      }
     })
     .catch((err) => {
       console.error(err)
     })
 }
 
-export function deleteImageOnCloudinary(data) {}
+export function deleteImagesOnCloudinary(formData) {
+  return Axios.post(`${cloudinaryEndPoint}/destroy`, formData)
+    .then((res) => {
+      console.log(res)
+      return res
+    })
+    .catch((err) => {
+      console.error(err)
+    })
+}

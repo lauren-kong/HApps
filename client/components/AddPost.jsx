@@ -188,15 +188,14 @@ function AddPost(props) {
       newPostPassword
     ) {
       const uploadPromises = images.map((image) => {
-        // console.log(image)
         const formData = new FormData()
         formData.append('file', image)
         formData.append('upload_preset', cloudinaryPreset)
         return uploadImageToCloudinary(formData)
       })
 
-      Promise.all(uploadPromises).then((values) => {
-        setUploadedImages(values)
+      Promise.all(uploadPromises).then((data) => {
+        setUploadedImages(data)
       })
     }
   }

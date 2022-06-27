@@ -3,13 +3,17 @@ import { useEffect } from 'react'
 import {
   getPostsByRegionCode,
   updatePostClicked,
-  deletePostById,
+  deletePost,
+  deleteImagesOnCloudinary,
 } from '../apiClient'
+import sha256 from 'crypto-js/sha256'
 
 function Post(props) {
+  const api_key = '739489637624155'
+  const api_secret = 'r3LH1BeNQUYG8mAKIXA0w7WvZAQ'
   const { post, handlePostsUpdate } = props
   // useEffect(() => {
-  //   console.log(post)
+  //   console.log(typeof post.postImages[0] === 'object')
   // }, [])
 
   const [passwordInPrompt, setPasswordInPrompt] = useState(null)
@@ -71,8 +75,23 @@ function Post(props) {
       return null
     } else if (passwordInPrompt === post.password) {
       console.log('need to delete this post')
-      deletePostById(post.postId).then((res) => {
-        console.log(res)
+      deletePost(post.postId).then((res) => {
+        if (typeof post.postImages[0] === 'object') {
+          post.postImages.map((img) => {
+            const timestamp = new Date().getTime()
+            const string = `public_id=${img.publicId}&timestamp=${timestamp}${api_secret}`
+            const signature = sha256(string)
+            const formData = new FormData()
+            console.log(img.signature)
+            formData.append('public_id', img.publicId)
+            formData.append('signature', signature)
+            formData.append('api_key', api_key)
+            formData.append('timestamp', timestamp)
+            deleteImagesOnCloudinary(formData).then((res) => {
+              console.log(res)
+            })
+          })
+        }
       })
     } else {
       setPasswordInPrompt(prompt('The password is incorrect. Try again'))
@@ -87,12 +106,21 @@ function Post(props) {
           <i className="fa-solid fa-caret-left"></i>
         </button>
         <div className="post-img-div">
-          <img
-            src={post.postImages[imageNum]}
-            alt="post"
-            onMouseDown={handleImageClick}
-            onContextMenu={handleImageClick}
-          />
+          {typeof post.postImages[0] === 'object' ? (
+            <img
+              src={post.postImages[imageNum].url}
+              alt="post"
+              onMouseDown={handleImageClick}
+              onContextMenu={handleImageClick}
+            />
+          ) : (
+            <img
+              src={post.postImages[imageNum]}
+              alt="post"
+              onMouseDown={handleImageClick}
+              onContextMenu={handleImageClick}
+            />
+          )}
         </div>
         <button onMouseDown={handleNextClick}>
           <i className="fa-solid fa-caret-right"></i>
