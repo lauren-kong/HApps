@@ -112,6 +112,19 @@ export function deletePost(id) {
     })
 }
 
+export function updatePost(updated) {
+  const { id } = updated
+  return request
+    .patch(`${filesURL}/post/update/${id}`)
+    .send(updated)
+    .then((res) => {
+      return res
+    })
+    .catch((err) => {
+      console.error(err)
+    })
+}
+
 export function uploadImageToCloudinary(data) {
   return Axios.post(`${cloudinaryEndPoint}/upload`, data)
     .then((res) => {

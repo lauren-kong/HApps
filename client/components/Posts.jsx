@@ -38,7 +38,11 @@ function Posts(props) {
     }
   }
 
-  function updateToEditMode(id) {
+  function offEditMode() {
+    setEditMode(false)
+  }
+
+  function assignUpdateId(id) {
     setUpdateId(id)
   }
 
@@ -72,7 +76,7 @@ function Posts(props) {
                   key={post.postId}
                   post={post}
                   handlePostsUpdate={handlePostsUpdate}
-                  updateToEditMode={updateToEditMode}
+                  assignUpdateId={assignUpdateId}
                   updateState={updateState}
                 />
               </div>
@@ -86,7 +90,9 @@ function Posts(props) {
             key={postToBeUpdated.postId}
             post={postToBeUpdated}
             handlePostsUpdate={handlePostsUpdate}
-            updateToEditMode={updateToEditMode}
+            assignUpdateId={assignUpdateId}
+            updateState={updateState}
+            offEditMode={offEditMode}
           />
         </div>
       ) : null}

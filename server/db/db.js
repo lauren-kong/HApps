@@ -12,6 +12,7 @@ module.exports = {
   addPost,
   getPostById,
   deletePostById,
+  updatePost,
 }
 
 function getRegions(db = connection) {
@@ -87,4 +88,8 @@ function addPost(newPost, db = connection) {
     reliability: 0,
     clicked: false,
   })
+}
+
+function updatePost({ id, eventName, location, description }, db = connection) {
+  return db('posts').update({ eventName, location, description }).where({ id })
 }

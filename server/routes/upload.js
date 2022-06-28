@@ -28,4 +28,16 @@ router.get('/post/delete/:id', (req, res) => {
     })
 })
 
+router.patch('/post/update/:id', (req, res) => {
+  const postId = req.params.id
+  const updated = req.body
+  db.updatePost(updated)
+    .then((response) => {
+      res.json(response)
+    })
+    .catch((err) => {
+      res.status(500).send(err.message)
+    })
+})
+
 module.exports = router

@@ -12,15 +12,13 @@ import { Link } from 'react-router-dom'
 function Post(props) {
   const api_key = '739489637624155'
   const api_secret = 'r3LH1BeNQUYG8mAKIXA0w7WvZAQ'
-  const { post, handlePostsUpdate, updateToEditMode, updateState } = props
+  const { post, handlePostsUpdate, assignUpdateId, updateState } = props
   // useEffect(() => {
   //   console.log(typeof post.postImages[0] === 'object')
   // }, [])
-  const hiddenButton = useRef()
 
-  const [done, setDone] = useState(false)
-
-  const [passwordInPrompt, setPasswordInPrompt] = useState(null)
+  const [passwordInDelPrompt, setPasswordInDelPrompt] = useState(null)
+  const [passwordInUpdatePrompt, setPasswordInUpdatePrompt] = useState(null)
 
   const [imageNum, setImageNum] = useState(0)
 
@@ -72,13 +70,13 @@ function Post(props) {
   function binButtonClickHandler(e) {
     e.preventDefault()
     const current = prompt('Please enter post password')
-    setPasswordInPrompt(current)
+    setPasswordInDelPrompt(current)
   }
 
   useEffect(() => {
-    if (!passwordInPrompt) {
+    if (!passwordInDelPrompt) {
       return null
-    } else if (passwordInPrompt === post.password) {
+    } else if (passwordInDelPrompt === post.password) {
       console.log('need to delete this post')
       deletePost(post.postId).then((res) => {
         if (typeof post.postImages[0] === 'object') {
@@ -100,17 +98,30 @@ function Post(props) {
         }
       })
     } else {
-      setPasswordInPrompt(prompt('The password is incorrect. Try again'))
+      setPasswordInDelPrompt(prompt('The password is incorrect. Try again'))
     }
-  }, [passwordInPrompt])
-
-  useEffect(() => {
-    console.log('hello')
-  }, [done])
+  }, [passwordInDelPrompt])
 
   function editButtonClickHandler(e) {
-    updateToEditMode(post.postId)
+    const password = prompt('Please enter post password')
+    // if (password === post.password) {
+    //   assignUpdateId(post.postId)
+    // }
+
+    setPasswordInUpdatePrompt(password)
   }
+
+  useEffect(() => {
+    if (passwordInUpdatePrompt) {
+      if (passwordInUpdatePrompt === post.password) {
+        assignUpdateId(post.postId)
+      } else {
+        setPasswordInUpdatePrompt(
+          prompt('The password is incorrect. Try again')
+        )
+      }
+    }
+  }, [passwordInUpdatePrompt])
 
   return (
     <div className="each-post">
@@ -167,9 +178,6 @@ function Post(props) {
         <button onClick={binButtonClickHandler}>
           <i className="fa-solid fa-trash-can"></i>
         </button>
-        <Link to={`/locations/${post.regionCode}`} ref={hiddenButton}>
-          <button>Move</button>
-        </Link>
         <button onClick={editButtonClickHandler}>Edit</button>
       </div>
     </div>

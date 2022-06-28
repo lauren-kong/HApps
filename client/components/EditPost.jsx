@@ -6,6 +6,7 @@ import {
   updatePostClicked,
   deletePost,
   deleteImagesOnCloudinary,
+  updatePost,
 } from '../apiClient'
 
 function EditPost(props) {
@@ -13,7 +14,13 @@ function EditPost(props) {
 
   const api_key = '739489637624155'
   const api_secret = 'r3LH1BeNQUYG8mAKIXA0w7WvZAQ'
-  const { post, handlePostsUpdate, updateToEditMode } = props
+  const {
+    post,
+    handlePostsUpdate,
+    updateToEditMode,
+    updateState,
+    offEditMode,
+  } = props
   // useEffect(() => {
   //   console.log(typeof post.postImages[0] === 'object')
   // }, [])
@@ -97,6 +104,24 @@ function EditPost(props) {
     setUpdatedDescription(e.target.value)
   }
 
+  function updateButtonClickHandler(e) {
+    console.log('id', post.id)
+    console.log('eventName', updatedEventName)
+    console.log('location', updatedLocation)
+    console.log('description', updatedDescription)
+
+    const updated = {
+      id: post.id,
+      eventName: updatedEventName,
+      location: updatedLocation,
+      description: updatedDescription,
+    }
+    updatePost(updated).then((res) => {
+      console.log(res)
+      offEditMode()
+    })
+  }
+
   return (
     <div className="each-post edit">
       {/* EditPost - images */}
@@ -174,7 +199,7 @@ function EditPost(props) {
         {/* <button onClick={binButtonClickHandler}>
           <i className="fa-solid fa-trash-can"></i>
         </button> */}
-        <button>Update</button>
+        <button onClick={updateButtonClickHandler}>Update</button>
       </div>
     </div>
   )
