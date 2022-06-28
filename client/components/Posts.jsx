@@ -10,6 +10,7 @@ function Posts(props) {
   const { region } = props
   const [updated, setUpdated] = useState(false)
   const [posts, setPosts] = useState(null)
+  const [validPosts, setValidPosts] = useState(null)
   const [editMode, setEditMode] = useState(false)
   const [updateId, setUpdateId] = useState(null)
   const [postToBeUpdated, setPostToBeUpdated] = useState(null)
@@ -26,9 +27,19 @@ function Posts(props) {
     // console.log(posts)
   }, [updated])
 
-  // useEffect(() => {
-  //   console.log(posts)
-  // }, [posts])
+  useEffect(() => {
+    console.log('posts', posts)
+    if (posts) {
+      const valid = posts.filter((post) => {
+        const now = new Date().getTime()
+        const differenceMin = (now - post.postedTime) / 1000 / 60
+        console.log('diff', differenceMin)
+        return differenceMin < 60
+      })
+      console.log('valid', valid)
+      setValidPosts(valid)
+    }
+  }, [posts])
 
   function updateState() {
     if (updated) {
@@ -68,8 +79,8 @@ function Posts(props) {
   return (
     <div className="below-header">
       <div className="ghost-div"></div>
-      {!editMode && posts
-        ? posts.map((post) => {
+      {!editMode && validPosts
+        ? validPosts.map((post) => {
             return (
               <div key={post.postId} className="display-posts">
                 <Post

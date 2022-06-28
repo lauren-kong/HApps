@@ -211,7 +211,7 @@ function AddPost(props) {
         postImages: JSON.stringify(uploadedImages),
         eventName: newPostEvent,
         location: newPostLocation,
-        postedTime: today.toLocaleTimeString('en-US'),
+        postedTime: today.getTime(),
         description: newPostDescription,
       }
       addPost(newPost).then((newId) => {

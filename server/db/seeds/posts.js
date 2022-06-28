@@ -15,7 +15,7 @@ exports.seed = (knex) => {
           ]),
           eventName: 'Night Market',
           location: 'Manukau Shopping Centre',
-          postedTime: today.toLocaleTimeString('en-US'),
+          postedTime: today.getTime(),
           description: 'Lots of food and some attractions are here!',
           reliability: 0,
           clicked: false,
@@ -31,7 +31,7 @@ exports.seed = (knex) => {
           ]),
           eventName: 'Hangi Festival',
           location: 'Mitai Maoiri Village',
-          postedTime: today.toLocaleTimeString('en-US'),
+          postedTime: today.getTime(),
           description:
             'We are having so much fun with Maori culture experience. We are also getting provided free hangi for our lunch!',
           reliability: 0,
@@ -49,7 +49,7 @@ exports.seed = (knex) => {
           ]),
           eventName: 'Discount only today',
           location: 'Wellbeing BBQ & Buffet',
-          postedTime: today.toLocaleTimeString('en-US'),
+          postedTime: today.getTime(),
           description:
             'All you can eat korean barbeque only for $25 per person. Normal price is $40!',
           reliability: 0,

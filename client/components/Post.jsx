@@ -168,7 +168,9 @@ function Post(props) {
 
       {/* Post - Details */}
       <div className="post-details">
-        <div className="post-time">{post.postedTime}</div>
+        <div className="post-time">
+          {new Date(post.postedTime).toLocaleString('en-NZ')}
+        </div>
         <div className="post-event">{post.eventName}</div>
         <div className="post-location">{post.location}</div>
         <div className="post-description">{post.description}</div>
