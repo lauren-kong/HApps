@@ -53,7 +53,12 @@ export function getPostById(id) {
   return request
     .get(`${url}/posts/${id}`)
     .then((res) => {
-      return res.body
+      const post = res.body
+      const parsedPost = {
+        ...post,
+        postImages: JSON.parse(post.postImages),
+      }
+      return parsedPost
     })
     .catch((err) => {
       console.error(err)

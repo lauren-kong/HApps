@@ -1,34 +1,35 @@
-import React, { useState, useRef } from 'react'
-import { useEffect } from 'react'
+import React, { useState, useEffect, useRef } from 'react'
+import sha256 from 'crypto-js/sha256'
+
 import {
   getPostsByRegionCode,
   updatePostClicked,
   deletePost,
   deleteImagesOnCloudinary,
 } from '../apiClient'
-import sha256 from 'crypto-js/sha256'
-import { Link } from 'react-router-dom'
 
-function Post(props) {
+function EditPost(props) {
+  console.log(props)
+
   const api_key = '739489637624155'
   const api_secret = 'r3LH1BeNQUYG8mAKIXA0w7WvZAQ'
-  const { post, handlePostsUpdate, updateToEditMode, updateState } = props
+  const { post, handlePostsUpdate, updateToEditMode } = props
   // useEffect(() => {
   //   console.log(typeof post.postImages[0] === 'object')
   // }, [])
-  const hiddenButton = useRef()
 
-  const [done, setDone] = useState(false)
+  const firstInputRef = useRef()
 
   const [passwordInPrompt, setPasswordInPrompt] = useState(null)
 
   const [imageNum, setImageNum] = useState(0)
 
-  const [reliabClicked, setReliabClicked] = useState(false)
-
-  const [reliabCount, setReliabCount] = useState(post.reliability)
-
   const [isInitialRender, setIsInitialRender] = useState(true)
+
+  const [updatedEventName, setUpdatedEventName] = useState(post.eventName)
+  const [updatedLocation, setUpdatedLocation] = useState(post.location)
+  const [updatedDescription, setUpdatedDescription] = useState(post.description)
+  const [updatedPassword, setUpdatedPassword] = useState(post.password)
 
   function handlePrevClick(e) {
     e.preventDefault()
@@ -42,28 +43,10 @@ function Post(props) {
       : setImageNum(imageNum + 1)
   }
 
-  function handleReliabClick(e) {
-    reliabClicked ? setReliabClicked(false) : setReliabClicked(true)
-  }
-
   useEffect(() => {
     setIsInitialRender(false)
+    firstInputRef.current.focus()
   }, [])
-
-  useEffect(() => {
-    !isInitialRender &&
-      (reliabClicked
-        ? setReliabCount(reliabCount + 1)
-        : setReliabCount(reliabCount - 1))
-
-    updatePostClicked(post.postId, reliabClicked).then((res) => {
-      getPostsByRegionCode(post.regionCode).then((posts) => {
-        handlePostsUpdate(posts)
-
-        // console.log(posts)
-      })
-    })
-  }, [reliabClicked])
 
   function handleImageClick(e) {
     e.preventDefault()
@@ -74,7 +57,6 @@ function Post(props) {
     const current = prompt('Please enter post password')
     setPasswordInPrompt(current)
   }
-
   useEffect(() => {
     if (!passwordInPrompt) {
       return null
@@ -94,7 +76,6 @@ function Post(props) {
             formData.append('timestamp', timestamp)
             deleteImagesOnCloudinary(formData).then((res) => {
               console.log(res)
-              updateState()
             })
           })
         }
@@ -104,18 +85,22 @@ function Post(props) {
     }
   }, [passwordInPrompt])
 
-  useEffect(() => {
-    console.log('hello')
-  }, [done])
+  function eventNameChangeHandler(e) {
+    setUpdatedEventName(e.target.value)
+  }
 
-  function editButtonClickHandler(e) {
-    updateToEditMode(post.postId)
+  function locationChangeHandler(e) {
+    setUpdatedLocation(e.target.value)
+  }
+
+  function descriptionChangeHandler(e) {
+    setUpdatedDescription(e.target.value)
   }
 
   return (
-    <div className="each-post">
-      {/* Post - images */}
-      <div className="post-images">
+    <div className="each-post edit">
+      {/* EditPost - images */}
+      <div className="post-images edit">
         <button onMouseDown={handlePrevClick}>
           <i className="fa-solid fa-caret-left"></i>
         </button>
@@ -142,8 +127,8 @@ function Post(props) {
       </div>
 
       {/* Post - Reliability Button */}
-      <div className="reliab-div">
-        {reliabClicked && (
+      <div className="reliab-div edit">
+        {/* {reliabClicked && (
           <div className="fa-button" onClick={handleReliabClick}>
             <i className="fa-solid fa-thumbs-up"></i>
           </div>
@@ -152,28 +137,47 @@ function Post(props) {
           <div className="fa-button" onClick={handleReliabClick}>
             <i className="fa-regular fa-thumbs-up"></i>
           </div>
-        )}
+        )} */}
       </div>
 
       {/* Post - Details */}
-      <div className="post-details">
+      <div className="post-details edit">
         <div className="post-time">{post.postedTime}</div>
-        <div className="post-event">{post.eventName}</div>
-        <div className="post-location">{post.location}</div>
-        <div className="post-description">{post.description}</div>
+        <div className="post-event edit">
+          <input
+            ref={firstInputRef}
+            type="text"
+            defaultValue={updatedEventName}
+            placeholder={post.eventName}
+            onChange={eventNameChangeHandler}
+          />
+        </div>
+        <div className="post-location edit">
+          <input
+            type="text"
+            defaultValue={updatedLocation}
+            placeholder={post.location}
+            onChange={locationChangeHandler}
+          />
+        </div>
+        <div className="post-description edit">
+          <textarea
+            type="text"
+            defaultValue={updatedDescription}
+            placeholder={post.description}
+            onChange={descriptionChangeHandler}
+          />
+        </div>
       </div>
 
       <div>
-        <button onClick={binButtonClickHandler}>
+        {/* <button onClick={binButtonClickHandler}>
           <i className="fa-solid fa-trash-can"></i>
-        </button>
-        <Link to={`/locations/${post.regionCode}`} ref={hiddenButton}>
-          <button>Move</button>
-        </Link>
-        <button onClick={editButtonClickHandler}>Edit</button>
+        </button> */}
+        <button>Update</button>
       </div>
     </div>
   )
 }
 
-export default Post
+export default EditPost

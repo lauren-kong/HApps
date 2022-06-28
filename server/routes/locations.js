@@ -6,7 +6,6 @@ const db = require('../db/db')
 
 router.get('/posts/:postId', (req, res) => {
   const id = req.params.postId
-  console.log('I am here')
   db.getPostById(id)
     .then((response) => {
       res.send(response)
