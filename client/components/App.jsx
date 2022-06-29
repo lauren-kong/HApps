@@ -38,7 +38,7 @@ const App = () => {
                     path={`/locations/${region.code}/addPost`}
                     element={
                       <>
-                        <ClockDate />
+                        <ClockDate region={region} />
                         <div className="ADDPOST-MAINS">
                           <Header
                             regions={regions}
@@ -57,7 +57,7 @@ const App = () => {
                     path={`/locations/${region.code}`}
                     element={
                       <>
-                        <ClockDate />
+                        <ClockDate region={region} />
                         <div className="POST_MAINS">
                           <Header
                             regions={regions}
@@ -78,7 +78,10 @@ const App = () => {
                             path={`/locations/${district.regionCode}/${district.code}`}
                             element={
                               <>
-                                <ClockDate />
+                                <ClockDate
+                                  region={region}
+                                  district={district}
+                                />
                                 <div className="POST_MAINS">
                                   <Header
                                     regions={regions}

@@ -20,8 +20,8 @@ function DistrictsDropdown(props) {
         </Dropdown.Toggle>
 
         <Dropdown.Menu id="dropdown-menu" className="districts-dropdown-menu">
-          <Dropdown.Item href={`/locations/${districts.regionCode}`}>
-            {districts.name}
+          <Dropdown.Item href={`/locations/${districts[0].regionCode}`}>
+            All districts
           </Dropdown.Item>
           {districts.map((district) => {
             return (
