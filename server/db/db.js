@@ -4,13 +4,25 @@ const connection = require('knex')(config)
 
 module.exports = {
   getRegions,
+  getDistricts,
   getPostsByRegionCode,
+  getPostsByDistrictCode,
   updatePostClicked,
   updateReliabCount,
+  getDistrictsByRegionCode,
+  getDistrictInfoByName,
+  addPost,
+  getPostById,
+  deletePostById,
+  updatePost,
 }
 
 function getRegions(db = connection) {
   return db('regions').select()
+}
+
+function getDistricts(db = connection) {
+  return db('districts').select()
 }
 
 function getPostsByRegionCode(regionCode, db = connection) {
@@ -34,6 +46,27 @@ function getPostsByRegionCode(regionCode, db = connection) {
     )
     .where({ regionCode })
 }
+function getPostsByDistrictCode(districtCode, db = connection) {
+  return db('posts')
+    .join('districts', 'districts.code', 'posts.districtCode')
+    .select(
+      'posts.id as postId',
+      'code as districtCode',
+      'ns',
+      'name as districtName',
+      'image',
+      'password',
+      'regionCode',
+      'postImages',
+      'eventName',
+      'location',
+      'postedTime',
+      'description',
+      'reliability',
+      'clicked'
+    )
+    .where({ districtCode })
+}
 
 function updatePostClicked(id, bool, db = connection) {
   return db('posts').update({ clicked: bool }).where({ id })
@@ -41,4 +74,49 @@ function updatePostClicked(id, bool, db = connection) {
 
 function updateReliabCount(id, num, db = connection) {
   return db('posts').update({ reliability: num }).where({ id })
+}
+
+function getPostById(id, db = connection) {
+  return db('posts').select().where({ id }).first()
+}
+
+function deletePostById(id, db = connection) {
+  return db('posts').delete().where({ id })
+}
+
+function getDistrictsByRegionCode(regionCode, db = connection) {
+  return db('districts').select().where({ regionCode })
+}
+
+function getDistrictInfoByName(name, db = connection) {
+  return db('districts').select().where({ name }).first()
+}
+
+function addPost(newPost, db = connection) {
+  const {
+    password,
+    regionCode,
+    districtCode,
+    postImages,
+    eventName,
+    location,
+    postedTime,
+    description,
+  } = newPost
+  return db('posts').insert({
+    password,
+    regionCode,
+    districtCode,
+    postImages,
+    eventName,
+    location,
+    postedTime,
+    description,
+    reliability: 0,
+    clicked: false,
+  })
+}
+
+function updatePost({ id, eventName, location, description }, db = connection) {
+  return db('posts').update({ eventName, location, description }).where({ id })
 }

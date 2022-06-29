@@ -18,6 +18,7 @@ exports.up = function (knex) {
     table.text('description')
     table.integer('reliability')
     table.boolean('clicked')
+    table.string('category')
   })
 }
 

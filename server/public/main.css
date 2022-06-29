@@ -1,14 +1,27 @@
 :root {
-  --main-color-main1: #41a6d5;
-  --main-color-main1-transparent: rgb(65, 166, 213, 0.4);
+  --main-color-main1: #a2cde1;
   --main-color-main2: #2880a9;
+  --main-color-main3: #14465e;
+  --main-color-main3-transparent: #14475eba;
+  --main-color-main4-transparent: rgb(65, 166, 213, 0.55);
+  --main-color-input-focus: rgba(161, 188, 200, 0.327);
+
   --main-font1: 'Archivo Black', sans-serif;
   --main-font2: 'Lexend Deca', sans-serif;
   --main-font3: 'Chivo', sans-serif;
   --main-font4: 'Montserrat', sans-serif;
+  --main-font5: 'Roboto', sans-serif;
+  --light-border-style: 0.2px solid lightgray;
 }
+
+@font-face {
+  font-family: 'Digitalclock';
+  src: url('./fonts/digital-clock-2.ttf');
+}
+
 body {
   margin: 0;
+  font-family: var(--main-font5);
 }
 /* .custom-shape-divider-top-1655722479 {
   position: absolute;
@@ -30,26 +43,176 @@ body {
   fill: var(--main-color-main1);
 } */
 
-/*---------------LOCATIONS------------------*/
-.locations-header {
+/*---------------HEADER----------------*/
+.outer-header {
+  font-size: 0.8rem;
+}
+.header-top-inner {
+  background-color: var(--main-color-main1);
+
   display: flex;
-  height: 150px;
-  position: relative;
-  background-color: var(--main-color-main1-transparent);
+  flex-direction: row;
+  /* justify-content: space-between; */
+  align-items: center;
+  width: 100%;
+  height: 120px;
+  position: fixed;
+  top: 0;
+  z-index: 120;
+  text-align: center;
+}
+
+.header-top-left {
+  flex: 1;
+}
+
+.header-top-mid {
+  width: 520px;
+  display: flex;
+  margin-top: auto;
+  margin-bottom: auto;
+  justify-content: center;
 }
 
 .logo-img {
   display: block;
-  width: 160px;
-  height: 80px;
-  margin-top: auto;
-  margin-bottom: auto;
-  margin-left: 40px;
+  margin: auto;
+  width: 100px;
 }
+
+.header-top-right {
+  flex: 1;
+  margin: auto;
+}
+
+#dropdown-basic {
+  border: none;
+  background-color: var(--main-color-main4-transparent);
+  z-index: 100;
+}
+#dropdown-menu {
+  background-color: rgba(255, 254, 254, 0.67);
+}
+
+.header-bottom {
+  display: flex;
+  /* justify-content: space-between; */
+  align-items: center;
+  width: 100%;
+  height: 280px;
+  background: rgb(162, 205, 225);
+  background: linear-gradient(
+    180deg,
+    rgba(162, 205, 225, 1) 0%,
+    rgba(249, 249, 249, 0) 100%
+  );
+  /* margin-top: 120px; */
+  position: fixed;
+  top: 120px;
+  z-index: 100;
+}
+.header-bottom-mid {
+  width: 520px;
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+  align-items: center;
+}
+.header-bottom-left {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-around;
+  /* align-items: center; */
+  height: 100%;
+}
+.header-bottom-right {
+  flex: 1;
+}
+
+.clock {
+  position: fixed;
+  z-index: 200;
+  border-radius: 10px;
+  border: 1.5px solid var(--main-color-main3-transparent);
+  color: var(--main-color-main3-transparent);
+  font-family: Digitalclock;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  /* width: 250px;
+  height: 120px; */
+  padding: 15px 50px 0px 50px;
+  margin-top: -350px;
+  margin-left: 50px;
+  text-align: center;
+}
+
+.clock-day,
+.clock-date {
+  font-size: 1.2rem;
+  font-weight: bold;
+  /* color: rgb(255, 255, 255); */
+}
+.clock-time {
+  font-size: 4.5rem;
+  font-weight: bold;
+  /* color: rgba(255, 255, 255, 0.99); */
+}
+
+.share-event-button-div button {
+  background-color: var(--main-color-main3-transparent);
+  border: none;
+  border-radius: 10px;
+  color: white;
+  height: 35px;
+}
+
+.header-bottom-current-region-name {
+  font-size: 4.5rem;
+  color: white;
+  /* margin-top: 20px; */
+}
+.header-bottom-districts-and-button {
+  display: flex;
+  margin-bottom: 140px;
+  gap: 20px;
+}
+
+.DISTRICTS_DROPDOWN {
+  /* border: 3px solid var(--main-color-main3); */
+  border-radius: 0.375rem;
+}
+
+.DISTRICTS_DROPDOWN > button {
+  width: 250px;
+  color: var(--main-color-main3);
+}
+
+.dropdown-menu {
+  width: 250px;
+}
+
+#dropdown-basic.districts-dropdown-toggle {
+  background-color: white;
+  border: 0.2px solid var(--main-color-main4-transparent);
+  color: var(--main-color-main3);
+}
+
+.below-header {
+  margin-top: 450px;
+  z-index: 0;
+}
+
+/*---------------LOCATIONS------------------*/
 
 .locations {
   margin-left: 30px;
   margin-bottom: 100px;
+  margin-top: 200px;
+  top: 120px;
 }
 
 .locations > h2 {
@@ -93,7 +256,7 @@ body {
 }
 
 .region-title {
-  background: var(--main-color-main1-transparent);
+  background: var(--main-color-main4-transparent);
   position: absolute;
   z-index: 1;
   margin: auto;
@@ -104,6 +267,20 @@ body {
   text-align: center;
 }
 /*---------------POSTS------------------*/
+
+.ghost-div {
+  position: fixed;
+  top: 0;
+  width: 100%;
+  height: 340px;
+  z-index: 90;
+  background-color: white;
+}
+
+.POST_MAINS {
+  font-size: 0.8rem;
+  margin-bottom: 300px;
+}
 
 .display-posts > div {
   margin-top: 40px;
@@ -116,22 +293,21 @@ body {
   flex-direction: column;
   justify-content: center;
   align-items: center;
-  width: 600px;
+  width: 520px;
   margin: auto;
-  padding-top: 50px;
-  padding-bottom: 50px;
+  padding-top: 30px;
+  padding-bottom: 30px;
 }
 
 .post-images {
   display: flex;
   justify-content: center;
   align-items: center;
-  gap: 20px;
+  gap: 10px;
 }
 
 .post-img-div {
-  border: 0.2px solid lightgray;
-
+  border: var(--light-border-style);
   display: flex;
   width: 400px;
   height: 400px;
@@ -139,6 +315,7 @@ body {
 }
 .post-images img {
   width: 400px;
+  max-height: 100%;
   display: block;
   margin-top: auto;
   margin-bottom: auto;
@@ -147,7 +324,15 @@ body {
 .post-images button {
   border: none;
   border-radius: 5px;
-  background-color: var(--main-color-main1-transparent);
+  background-color: var(--main-color-main4-transparent);
+  color: white;
+  width: 35px;
+  height: 35px;
+}
+.post-images button {
+  border: none;
+  border-radius: 5px;
+  background-color: var(--main-color-main4-transparent);
   color: white;
   width: 40px;
   height: 40px;
@@ -160,18 +345,23 @@ body {
 .reliab-div {
   display: flex;
   width: 400px;
-  height: 50px;
-  border: 0.2px solid lightgray;
+  height: 60px;
+  border: var(--light-border-style);
 }
-
-.reliab-div i {
-  display: block;
-  width: 20px;
+.reliab-div > .fa-button {
+  display: flex;
+  width: 50px;
+  height: 50px;
   margin-left: 350px;
   margin-top: auto;
   margin-bottom: auto;
   text-align: center;
   font-size: 1.6rem;
+}
+
+.fa-button > i {
+  display: block;
+  margin: auto;
 }
 
 #reliab-black {
@@ -187,19 +377,225 @@ body {
   flex-direction: column;
   width: 400px;
   height: 200px;
-  border: 0.2px solid lightgray;
+  border: var(--light-border-style);
 }
 
 .post-details > div {
-  flex: 1;
+  flex: 1.2;
   margin-left: 20px;
+  font-weight: bold;
 }
 
 .post-details > div:first-child {
-  margin-left: 20px;
-  margin-top: 20px;
+  margin-left: 15px;
+  margin-top: 10px;
 }
 
 .post-details > div:last-child {
   flex: 4;
+  font-weight: normal;
+}
+
+.post-time {
+  color: gray;
+}
+
+/*---------------ADD POST------------------*/
+
+.add-form-main {
+  display: flex;
+  flex-direction: row;
+  width: 800px;
+  height: 300px;
+  margin-left: auto;
+  margin-right: auto;
+  position: relative;
+  justify-content: space-between;
+}
+
+.add-form-main > div {
+  text-align: center;
+}
+
+.add-photo-div {
+  width: 300px;
+  height: 300px;
+}
+.add-photos-button {
+  background-color: var(--main-color-main1);
+  border: none;
+  color: white;
+  font-size: 18px;
+  width: 100%;
+  height: 100%;
+  cursor: pointer;
+}
+
+.preview-overall {
+  position: relative;
+}
+
+.show-image-number {
+  width: 40px;
+  height: 40px;
+  position: absolute;
+  top: -30px;
+  color: var(--main-color-main3-transparent);
+}
+
+.preview-div {
+  position: relative;
+  border: none;
+}
+.preview-div > div {
+  width: 100%;
+  height: 300px;
+}
+.preview-div > div > img {
+  width: 100%;
+  height: 100%;
+  object-fit: contain;
+  border: none;
+}
+
+.preview-div > button {
+  position: absolute;
+  /* top: 300px; */
+  width: 40px;
+  height: 40px;
+  background-color: rgba(206, 216, 241, 0.515);
+  color: white;
+  border: none;
+  border-radius: 5px;
+}
+.preview-div > button:first-child {
+  left: 5px;
+  top: 130px;
+}
+
+.preview-div > button:last-child {
+  right: 5px;
+  top: 130px;
+}
+
+.reset-photos-div {
+  position: absolute;
+  top: 320px;
+  left: 100px;
+}
+.reset-photos-button {
+  width: 100px;
+  height: 40px;
+  background-color: var(--main-color-main1);
+  border: none;
+  border-radius: 5px;
+  color: white;
+  font-size: 12px;
+}
+.other-form-and-submit {
+  width: 400px;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+}
+
+.other-form-main {
+  width: 100%;
+  border: 0.25px solid var(--main-color-main3);
+  margin-left: auto;
+  margin-right: auto;
+}
+
+.add-post-districts-div {
+  width: 100%;
+}
+
+.add-post-districts-select,
+.add-post-district-option,
+.other-form-main input,
+.other-form-main textarea {
+  width: 100%;
+  height: 50px;
+  padding-left: 10px;
+  border: none;
+  border-bottom: var(--light-border-style);
+  resize: none;
+  margin-left: auto;
+  margin-right: auto;
+}
+.description-div {
+  height: 100px;
+  width: 100%;
+}
+.description-input {
+  width: 100%;
+  height: 100% !important;
+  text-overflow: hidden;
+  word-wrap: break-word;
+  word-break: break-all;
+  height: 80px;
+}
+
+select:focus,
+input:focus,
+textarea:focus {
+  border: 0;
+  background-color: var(--main-color-input-focus);
+  padding: none;
+  outline: none;
+}
+.password-and-button {
+  display: flex;
+  flex-direction: row;
+  width: 400px;
+  height: 40px;
+  justify-content: space-between;
+}
+
+.password-and-button > input {
+  width: 250px;
+}
+
+.password-and-button > form {
+  display: block;
+  width: 100px;
+  height: 100%;
+}
+.password-and-button button {
+  width: 100px;
+  height: 100%;
+  background-color: var(--main-color-main3-transparent);
+  border: none;
+  border-radius: 10px;
+  color: white;
+}
+
+/*---------------EDITPOST------------------*/
+
+.post-event.edit,
+.post-location.edit,
+.post-description.edit {
+  border-bottom: var(--light-border-style);
+  margin-right: 20px;
+  margin-bottom: 20px;
+}
+.post-event.edit {
+  margin-top: 20px;
+}
+.edit input,
+.edit textarea {
+  width: 100%;
+  height: 100%;
+  border: none;
+  color: grey;
+  resize: none;
+}
+.edit input:focus,
+.edit textarea:focus {
+  width: 100%;
+  height: 100%;
+}
+
+.reliab-div.edit {
+  height: 30px;
 }

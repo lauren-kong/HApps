@@ -1,16 +1,18 @@
 import React from 'react'
 
-import LocationsHeader from './Locations-Header'
+import HeaderTop from './HeaderTop'
+import HeaderBottom from './HeaderBottom'
 
-function Header() {
+function Header(props) {
+  const { regions, currentRegion, color, district } = props
+
   return (
-    <div className="posts-header">
-      <div className="post-header-logo">
-        <LocationsHeader />
+    <div className="outer-header">
+      <div className="header-top">
+        <HeaderTop regions={regions} color={color} />
       </div>
-      <div className="post-header-locations">
-        <div></div>
-        <div></div>
+      <div className="header-bottom">
+        <HeaderBottom currentRegion={currentRegion} district={district} />
       </div>
     </div>
   )
