@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react'
-import { getRegions, getPostsByRegionCode } from '../apiClient'
+import { getRegions, getPostsByRegionCode, getDistricts } from '../apiClient'
 
 import AddPost from './AddPost'
 import HeaderTop from './HeaderTop'
@@ -13,10 +13,14 @@ import { Routes, Route } from 'react-router-dom'
 const App = () => {
   //JAVASCRIPT
   const [regions, setRegions] = useState(null)
+  const [districts, setDistricts] = useState(null)
 
   useEffect(() => {
     getRegions().then((regionsData) => {
       setRegions(regionsData)
+    })
+    getDistricts().then((districtsData) => {
+      setDistricts(districtsData)
     })
   }, [])
 
@@ -24,32 +28,97 @@ const App = () => {
   return (
     <div className="app">
       <Routes>
-        {/* ADDPOST PAGE */}
         {regions
           ? regions.map((region) => {
               return (
-                <Route
-                  key="add-post"
-                  path={`/locations/${region.code}/addPost`}
-                  element={
-                    <>
-                      <ClockDate />
-                      <div className="ADDPOST-MAINS">
-                        <Header
-                          regions={regions}
-                          currentRegion={region}
-                          color={'white'}
-                        />
-                        <AddPost key={region.id} region={region} />
+                <>
+                  {/* ADDPOST PAGE */}
+                  <Route
+                    key="add-post"
+                    path={`/locations/${region.code}/addPost`}
+                    element={
+                      <>
+                        <ClockDate />
+                        <div className="ADDPOST-MAINS">
+                          <Header
+                            regions={regions}
+                            currentRegion={region}
+                            color={'white'}
+                          />
+                          <AddPost key={region.id} region={region} />
+                        </div>
+                      </>
+                    }
+                  />
+
+                  {/* POSTS PAGE (RegionCode) */}
+                  <Route
+                    key="posts"
+                    path={`/locations/${region.code}`}
+                    element={
+                      <>
+                        <ClockDate />
+                        <div className="POST_MAINS">
+                          <Header
+                            regions={regions}
+                            currentRegion={region}
+                            color={'white'}
+                          />
+                          <Posts key={region.id} region={region} />
+                        </div>
+                      </>
+                    }
+                  />
+                  {/* POSTS PAGE (DistrictCode)*/}
+                  {districts
+                    ? districts.map((district) => {
+                        return (
+                          <Route
+                            key="postsByDistrict"
+                            path={`/locations/${district.regionCode}/${district.code}`}
+                            element={
+                              <>
+                                <ClockDate />
+                                <div className="POST_MAINS">
+                                  <Header
+                                    regions={regions}
+                                    currentRegion={region}
+                                    color={'white'}
+                                    district={district}
+                                  />
+                                  <Posts
+                                    key={region.id}
+                                    region={region}
+                                    district={district}
+                                  />
+                                </div>
+                              </>
+                            }
+                          />
+                        )
+                      })
+                    : null}
+
+                  {/* LOCATIONS PAGE */}
+                  <Route
+                    key="locations"
+                    path="/locations"
+                    element={
+                      <div>
+                        <HeaderTop regions={regions} color={'main'} />
+                        <Locations regions={regions} />
                       </div>
-                    </>
-                  }
-                />
+                    }
+                  />
+
+                  {/* HOME PAGE */}
+                  <Route key="home" path="/" element={<Home />} />
+                </>
               )
             })
           : null}
-
-        {/* POSTS PAGE */}
+        {/* 
+        POSTS PAGE
         {regions
           ? regions.map((region) => {
               return (
@@ -73,7 +142,8 @@ const App = () => {
               )
             })
           : null}
-        {/* LOCATIONS PAGE */}
+
+        LOCATIONS PAGE
         {regions ? (
           <Route
             key="locations"
@@ -87,8 +157,8 @@ const App = () => {
           />
         ) : null}
 
-        {/* HOME PAGE */}
-        <Route key="home" path="/" element={<Home />} />
+        HOME PAGE
+        <Route key="home" path="/" element={<Home />} /> */}
       </Routes>
     </div>
   )

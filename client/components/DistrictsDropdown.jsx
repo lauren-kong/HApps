@@ -1,9 +1,13 @@
 import React from 'react'
+import { useEffect } from 'react'
 import Dropdown from 'react-bootstrap/Dropdown'
 import DropdownButton from 'react-bootstrap/DropdownButton'
 
 function DistrictsDropdown(props) {
-  const { districts } = props
+  const { districts, district } = props
+  useEffect(() => {
+    console.log(district)
+  }, [])
   return (
     <>
       <Dropdown className="DISTRICTS_DROPDOWN">
@@ -12,7 +16,7 @@ function DistrictsDropdown(props) {
           id="dropdown-basic"
           className="districts-dropdown-toggle"
         >
-          All districts
+          {district ? district.name : 'All districts'}
         </Dropdown.Toggle>
 
         <Dropdown.Menu id="dropdown-menu" className="districts-dropdown-menu">

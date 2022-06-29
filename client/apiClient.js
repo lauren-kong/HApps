@@ -18,9 +18,38 @@ export function getRegions() {
     })
 }
 
+export function getDistricts() {
+  return request
+    .get(`${url}/districts`)
+    .then((res) => {
+      return res.body
+    })
+    .catch((err) => {
+      console.error(err)
+    })
+}
+
 export function getPostsByRegionCode(code) {
   return request
     .get(`${url}/${code}`)
+    .then((res) => {
+      const posts = res.body
+      const parsedPosts = posts.map((post) => {
+        const parsedPost = {
+          ...post,
+          postImages: JSON.parse(post.postImages),
+        }
+        return parsedPost
+      })
+      return parsedPosts
+    })
+    .catch((err) => {
+      console.error(err)
+    })
+}
+export function getPostsByDistrictCode(code) {
+  return request
+    .get(`${url}/posts/district/${code}`)
     .then((res) => {
       const posts = res.body
       const parsedPosts = posts.map((post) => {

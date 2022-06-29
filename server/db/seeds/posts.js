@@ -8,7 +8,7 @@ exports.seed = (knex) => {
           id: 1,
           password: 'firstPostPassword',
           regionCode: 'AUK',
-          districtCode: 'Manukau City',
+          districtCode: 'MKC',
           postImages: JSON.stringify([
             '/images/auckland.jpeg',
             '/images/northland.jpeg',
@@ -24,7 +24,7 @@ exports.seed = (knex) => {
           id: 2,
           password: 'secondPostPassword',
           regionCode: 'BOP',
-          districtCode: 'Rotorua',
+          districtCode: 'RTR',
           postImages: JSON.stringify([
             '/images/hangi.jpeg',
             '/images/hangi-meal.jpeg',
@@ -41,7 +41,7 @@ exports.seed = (knex) => {
           id: 3,
           password: 'thirdPostPassword',
           regionCode: 'AUK',
-          districtCode: 'North Shore City',
+          districtCode: 'NSC',
           postImages: JSON.stringify([
             '/images/k-bbq.jpeg',
             '/images/k-bbq-2.jpeg',

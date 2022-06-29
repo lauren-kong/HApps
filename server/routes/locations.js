@@ -15,7 +15,18 @@ router.get('/posts/:postId', (req, res) => {
     })
 })
 
-// GET /v1/locations/district/:districtsName
+router.get('/posts/district/:districtCode', (req, res) => {
+  const code = req.params.districtCode
+  db.getPostsByDistrictCode(code)
+    .then((response) => {
+      console.log(response)
+      res.json(response)
+    })
+    .catch((err) => {
+      res.status(500).send(err.message)
+    })
+})
+
 router.get('/district/:districtName', (req, res) => {
   const nameOfDist = req.params.districtName
   db.getDistrictInfoByName(nameOfDist)
@@ -27,7 +38,16 @@ router.get('/district/:districtName', (req, res) => {
     })
 })
 
-// PATCH /v1/locations/clicked/:postId/:reliabNum
+router.get('/districts', (req, res) => {
+  db.getDistricts()
+    .then((response) => {
+      res.json(response)
+    })
+    .catch((err) => {
+      res.status(500).send(err.message)
+    })
+})
+
 router.patch('/clicked/:postId/reliab/:reliabNum', (req, res) => {
   const id = req.params.postId
   const num = req.params.reliabNum
@@ -40,7 +60,6 @@ router.patch('/clicked/:postId/reliab/:reliabNum', (req, res) => {
     })
 })
 
-// PATCH /v1/locations/clicked/:postId/:isClicked
 router.patch('/clicked/:postId/:isClicked', (req, res) => {
   const id = req.params.postId
   const bool = req.params.isClicked
@@ -53,7 +72,6 @@ router.patch('/clicked/:postId/:isClicked', (req, res) => {
     })
 })
 
-// GET /v1/locations/:regionCode/districts
 router.get('/:regionCode/districts', (req, res) => {
   const regioncode = req.params.regionCode
   db.getDistrictsByRegionCode(regioncode)
@@ -65,7 +83,6 @@ router.get('/:regionCode/districts', (req, res) => {
     })
 })
 
-// GET /v1/locations/:regionCode
 router.get('/:regionCode', (req, res) => {
   const regioncode = req.params.regionCode
   db.getPostsByRegionCode(regioncode)
@@ -77,7 +94,6 @@ router.get('/:regionCode', (req, res) => {
     })
 })
 
-// GET /v1/locations
 router.get('/', (req, res) => {
   db.getRegions()
     .then((regions) => {

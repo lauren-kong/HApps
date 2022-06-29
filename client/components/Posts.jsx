@@ -8,6 +8,7 @@ import { getRegions, getPostsByRegionCode, getPostById } from '../apiClient'
 function Posts(props) {
   //JAVASCRIPT
   const { region } = props
+  const district = props?.district
   const [updated, setUpdated] = useState(false)
   const [posts, setPosts] = useState(null)
   const [validPosts, setValidPosts] = useState(null)
@@ -18,7 +19,7 @@ function Posts(props) {
     getPostsByRegionCode(region.code).then((postsData) => {
       setPosts(postsData)
     })
-    // console.log(posts)
+    console.log(district)
   }, [])
   useEffect(() => {
     getPostsByRegionCode(region.code).then((postsData) => {
@@ -79,7 +80,7 @@ function Posts(props) {
   return (
     <div className="below-header">
       <div className="ghost-div"></div>
-      {!editMode && validPosts
+      {!editMode && validPosts && !district
         ? validPosts.map((post) => {
             return (
               <div key={post.postId} className="display-posts">
@@ -90,6 +91,24 @@ function Posts(props) {
                   assignUpdateId={assignUpdateId}
                   updateState={updateState}
                 />
+              </div>
+            )
+          })
+        : null}
+
+      {district && validPosts
+        ? validPosts.map((post) => {
+            return (
+              <div key={post.postId} className="display-posts">
+                {post.districtCode === district.code ? (
+                  <Post
+                    key={post.postId}
+                    post={post}
+                    handlePostsUpdate={handlePostsUpdate}
+                    assignUpdateId={assignUpdateId}
+                    updateState={updateState}
+                  />
+                ) : null}
               </div>
             )
           })

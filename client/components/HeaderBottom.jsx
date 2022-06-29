@@ -7,7 +7,7 @@ import DistrictsDropdown from './DistrictsDropdown'
 import { getDistrictsByRegionCode } from '../apiClient'
 
 function HeaderBottom(props) {
-  const { currentRegion, currentDistrict } = props
+  const { currentRegion, currentDistrict, district } = props
   const [districts, setDistricts] = useState(null)
 
   // console.log(currentDistrict)
@@ -43,7 +43,9 @@ function HeaderBottom(props) {
           {currentRegion.name}
         </div>
         <div className="header-bottom-districts-and-button">
-          {districts ? <DistrictsDropdown districts={districts} /> : null}
+          {districts ? (
+            <DistrictsDropdown districts={districts} district={district} />
+          ) : null}
           <div className="share-event-button-div">
             {currentDistrict ? (
               <Link

@@ -4,7 +4,9 @@ const connection = require('knex')(config)
 
 module.exports = {
   getRegions,
+  getDistricts,
   getPostsByRegionCode,
+  getPostsByDistrictCode,
   updatePostClicked,
   updateReliabCount,
   getDistrictsByRegionCode,
@@ -17,6 +19,10 @@ module.exports = {
 
 function getRegions(db = connection) {
   return db('regions').select()
+}
+
+function getDistricts(db = connection) {
+  return db('districts').select()
 }
 
 function getPostsByRegionCode(regionCode, db = connection) {
@@ -39,6 +45,27 @@ function getPostsByRegionCode(regionCode, db = connection) {
       'clicked'
     )
     .where({ regionCode })
+}
+function getPostsByDistrictCode(districtCode, db = connection) {
+  return db('posts')
+    .join('districts', 'districts.code', 'posts.districtCode')
+    .select(
+      'posts.id as postId',
+      'code as districtCode',
+      'ns',
+      'name as districtName',
+      'image',
+      'password',
+      'regionCode',
+      'postImages',
+      'eventName',
+      'location',
+      'postedTime',
+      'description',
+      'reliability',
+      'clicked'
+    )
+    .where({ districtCode })
 }
 
 function updatePostClicked(id, bool, db = connection) {
