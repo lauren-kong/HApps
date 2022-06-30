@@ -75,7 +75,7 @@ const App = () => {
                         return (
                           <Route
                             key="postsByDistrict"
-                            path={`/locations/${district.regionCode}/${district.code}`}
+                            path={`/locations/${region.code}/${district.code}`}
                             element={
                               <>
                                 <ClockDate
