@@ -10,7 +10,7 @@ import {
 } from '../apiClient'
 
 function EditPost(props) {
-  console.log(props)
+  // console.log(props)
 
   const api_key = '739489637624155'
   const api_secret = 'r3LH1BeNQUYG8mAKIXA0w7WvZAQ'
@@ -68,7 +68,7 @@ function EditPost(props) {
     if (!passwordInPrompt) {
       return null
     } else if (passwordInPrompt === post.password) {
-      console.log('need to delete this post')
+      // console.log('need to delete this post')
       deletePost(post.postId).then((res) => {
         if (typeof post.postImages[0] === 'object') {
           post.postImages.map((img) => {
@@ -76,7 +76,7 @@ function EditPost(props) {
             const string = `public_id=${img.publicId}&timestamp=${timestamp}${api_secret}`
             const signature = sha256(string)
             const formData = new FormData()
-            console.log(img.signature)
+            // console.log(img.signature)
             formData.append('public_id', img.publicId)
             formData.append('signature', signature)
             formData.append('api_key', api_key)
@@ -105,10 +105,10 @@ function EditPost(props) {
   }
 
   function updateButtonClickHandler(e) {
-    console.log('id', post.id)
-    console.log('eventName', updatedEventName)
-    console.log('location', updatedLocation)
-    console.log('description', updatedDescription)
+    // console.log('id', post.id)
+    // console.log('eventName', updatedEventName)
+    // console.log('location', updatedLocation)
+    // console.log('description', updatedDescription)
 
     const updated = {
       id: post.id,
@@ -117,7 +117,7 @@ function EditPost(props) {
       description: updatedDescription,
     }
     updatePost(updated).then((res) => {
-      console.log(res)
+      // console.log(res)
       offEditMode()
     })
   }

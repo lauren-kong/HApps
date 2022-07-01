@@ -7,7 +7,7 @@ function RegionDropdown(props) {
   const { regions } = props
   return (
     <>
-      <Dropdown>
+      <Dropdown id="other-region-dropdown">
         <Dropdown.Toggle variant="success" id="dropdown-basic">
           Other Regions
         </Dropdown.Toggle>

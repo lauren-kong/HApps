@@ -17,7 +17,7 @@ function HeaderBottom(props) {
     getDistrictsByRegionCode(currentRegion.code).then((distArr) => {
       setDistricts(distArr)
     })
-  }, [])
+  }, [districts])
 
   return (
     <>

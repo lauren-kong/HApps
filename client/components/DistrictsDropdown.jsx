@@ -5,9 +5,9 @@ import DropdownButton from 'react-bootstrap/DropdownButton'
 
 function DistrictsDropdown(props) {
   const { districts, district } = props
-  useEffect(() => {
-    console.log(district)
-  }, [])
+  // useEffect(() => {
+  //   console.log(district)
+  // }, [])
   return (
     <>
       <Dropdown className="DISTRICTS_DROPDOWN">
@@ -20,7 +20,9 @@ function DistrictsDropdown(props) {
         </Dropdown.Toggle>
 
         <Dropdown.Menu id="dropdown-menu" className="districts-dropdown-menu">
-          <Dropdown.Item href={`/locations/${districts[0].regionCode}`}>
+          <Dropdown.Item
+            href={`/locations/${districts ? districts[0].regionCode : ''}`}
+          >
             All districts
           </Dropdown.Item>
           {districts.map((district) => {

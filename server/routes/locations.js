@@ -38,7 +38,7 @@ router.get('/district/:districtName', (req, res) => {
     })
 })
 
-router.get('/districts', (req, res) => {
+router.get('/region/districts/all', (req, res) => {
   db.getDistricts()
     .then((response) => {
       res.json(response)

@@ -73,6 +73,11 @@ body {
   margin-bottom: auto;
   justify-content: center;
 }
+/* @media (max-width: 1200px) {
+  .header-top-mid {
+    width: 320px;
+  }
+} */
 
 .logo-img {
   display: block;
@@ -145,7 +150,7 @@ body {
   /* width: 250px;
   height: 120px; */
   padding: 15px;
-  margin-top: -350px;
+  margin-top: -400px;
   margin-left: 40px;
   text-align: center;
 }
@@ -160,6 +165,10 @@ body {
   font-size: 2.5rem;
   font-weight: bold;
   /* color: rgba(255, 255, 255, 0.99); */
+}
+
+.widget-weather {
+  width: 220px;
 }
 
 .share-event-button-div button {

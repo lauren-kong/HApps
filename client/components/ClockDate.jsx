@@ -4,27 +4,29 @@ import Clock from 'react-live-clock'
 
 function ClockDate(props) {
   const { region, district } = props
-  const regionName = region?.name
   const [weatherInfo, setWeatherInfo] = useState({})
 
   useEffect(() => {
     if (district) {
-      console.log('district:', district)
+      // console.log('district:', district)
       setWeatherInfo({
         name: district.weatherLocName,
         type: district.weatherLocType,
       })
+    } else if (!district && region) {
+      // console.log('region:', region)
+      setWeatherInfo({
+        name: region.weatherLocName,
+        type: region.weatherLocType,
+      })
     }
-  }, [district])
+  }, [district, region])
 
-  useEffect(() => {
-    if (weatherInfo) {
-      console.log('weatherInfo:', weatherInfo)
-    }
-  }, [weatherInfo])
-
-  const [loc, setLoc] = useState(null)
-  const [type, setType] = useState(null)
+  // useEffect(() => {
+  //   if (weatherInfo) {
+  //     console.log('weatherInfo:', weatherInfo)
+  //   }
+  // }, [weatherInfo])
 
   // useEffect(() => {
   //   switch (districtName) {
@@ -169,6 +171,7 @@ function ClockDate(props) {
         }&type=${weatherInfo ? weatherInfo.type : 'urban'}`}
         allowtransparency="true"
         style={{ border: 'none' }}
+        className="widget-weather"
       ></iframe>
     </div>
   )

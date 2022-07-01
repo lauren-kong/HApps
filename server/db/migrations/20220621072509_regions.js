@@ -9,6 +9,8 @@ exports.up = function (knex) {
     table.string('ns')
     table.string('name')
     table.string('image')
+    table.string('weatherLocName')
+    table.string('weatherLocType')
   })
 }
 

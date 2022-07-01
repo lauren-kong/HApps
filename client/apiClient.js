@@ -20,7 +20,7 @@ export function getRegions() {
 
 export function getDistricts() {
   return request
-    .get(`${url}/districts`)
+    .get(`${url}/region/districts/all`)
     .then((res) => {
       return res.body
     })

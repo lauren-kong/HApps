@@ -28,109 +28,69 @@ const App = () => {
   return (
     <div className="app">
       <Routes>
-        {regions
-          ? regions.map((region) => {
-              return (
-                <>
-                  {/* ADDPOST PAGE */}
+        {regions && districts
+          ? regions.map((region, index) => {
+              districts.map((district, index2) => {
+                return (
                   <Route
-                    key="add-post"
-                    path={`/locations/${region.code}/addPost`}
+                    key={index2}
+                    path={`/locations/${region.code}/${district.code}/`}
                     element={
                       <>
-                        <ClockDate region={region} />
-                        <div className="ADDPOST-MAINS">
-                          <Header
-                            regions={regions}
-                            currentRegion={region}
-                            color={'white'}
-                          />
-                          <AddPost key={region.id} region={region} />
-                        </div>
-                      </>
-                    }
-                  />
-
-                  {/* POSTS PAGE (RegionCode) */}
-                  <Route
-                    key="posts"
-                    path={`/locations/${region.code}`}
-                    element={
-                      <>
-                        <ClockDate region={region} />
+                        <ClockDate region={region} district={district} />
                         <div className="POST_MAINS">
                           <Header
                             regions={regions}
                             currentRegion={region}
                             color={'white'}
+                            district={district}
                           />
-                          <Posts key={region.id} region={region} />
+                          <Posts
+                            key={region.id}
+                            region={region}
+                            district={district}
+                          />
                         </div>
                       </>
                     }
                   />
-                  {/* POSTS PAGE (DistrictCode)*/}
-                  {districts
-                    ? districts.map((district) => {
-                        return (
-                          <Route
-                            key="postsByDistrict"
-                            path={`/locations/${region.code}/${district.code}`}
-                            element={
-                              <>
-                                <ClockDate
-                                  region={region}
-                                  district={district}
-                                />
-                                <div className="POST_MAINS">
-                                  <Header
-                                    regions={regions}
-                                    currentRegion={region}
-                                    color={'white'}
-                                    district={district}
-                                  />
-                                  <Posts
-                                    key={region.id}
-                                    region={region}
-                                    district={district}
-                                  />
-                                </div>
-                              </>
-                            }
-                          />
-                        )
-                      })
-                    : null}
+                )
+              })
+            })
+          : null}
 
-                  {/* LOCATIONS PAGE */}
-                  <Route
-                    key="locations"
-                    path="/locations"
-                    element={
-                      <div>
-                        <HeaderTop regions={regions} color={'main'} />
-                        <Locations regions={regions} />
+        {regions
+          ? regions.map((region, index) => {
+              return (
+                <Route
+                  key="add-post"
+                  path={`/locations/${region.code}/addPost/`}
+                  element={
+                    <>
+                      <ClockDate region={region} />
+                      <div className="ADDPOST-MAINS">
+                        <Header
+                          regions={regions}
+                          currentRegion={region}
+                          color={'white'}
+                        />
+                        <AddPost key={region.id} region={region} />
                       </div>
-                    }
-                  />
-
-                  {/* HOME PAGE */}
-                  <Route key="home" path="/" element={<Home />} />
-                </>
+                    </>
+                  }
+                />
               )
             })
           : null}
-        {/* 
-        POSTS PAGE
         {regions
-          ? regions.map((region) => {
+          ? regions.map((region, index) => {
               return (
                 <Route
                   key="posts"
-                  path={`/locations/${region.code}`}
+                  path={`/locations/${region.code}/`}
                   element={
                     <>
-                      <ClockDate />
+                      <ClockDate region={region} />
                       <div className="POST_MAINS">
                         <Header
                           regions={regions}
@@ -146,11 +106,9 @@ const App = () => {
             })
           : null}
 
-        LOCATIONS PAGE
         {regions ? (
           <Route
-            key="locations"
-            path="/locations"
+            path="/locations/"
             element={
               <div>
                 <HeaderTop regions={regions} color={'main'} />
@@ -160,8 +118,7 @@ const App = () => {
           />
         ) : null}
 
-        HOME PAGE
-        <Route key="home" path="/" element={<Home />} /> */}
+        <Route key="home" path="/" element={<Home />} />
       </Routes>
     </div>
   )
