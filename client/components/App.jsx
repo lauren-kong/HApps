@@ -68,7 +68,7 @@ const App = () => {
                   element={
                     <>
                       <ClockDate region={region} />
-                      <div className="ADDPOST-MAINS">
+                      <div className="ADDPOST">
                         <Header
                           regions={regions}
                           currentRegion={region}
