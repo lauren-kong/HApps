@@ -8,6 +8,8 @@ exports.up = function (knex) {
     table.string('regionCode')
     table.string('code')
     table.string('name')
+    table.string('weatherLocName')
+    table.string('weatherLocType')
   })
 }
 

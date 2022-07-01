@@ -7,8 +7,7 @@ import { getRegions, getPostsByRegionCode, getPostById } from '../apiClient'
 
 function Posts(props) {
   //JAVASCRIPT
-  const { region } = props
-  const district = props?.district
+  const { region, district } = props
   const [updated, setUpdated] = useState(false)
   const [posts, setPosts] = useState(null)
   const [validPosts, setValidPosts] = useState(null)

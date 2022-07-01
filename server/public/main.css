@@ -144,9 +144,9 @@ body {
   align-items: center;
   /* width: 250px;
   height: 120px; */
-  padding: 15px 50px 0px 50px;
+  padding: 15px;
   margin-top: -350px;
-  margin-left: 50px;
+  margin-left: 40px;
   text-align: center;
 }
 
@@ -157,7 +157,7 @@ body {
   /* color: rgb(255, 255, 255); */
 }
 .clock-time {
-  font-size: 4.5rem;
+  font-size: 2.5rem;
   font-weight: bold;
   /* color: rgba(255, 255, 255, 0.99); */
 }
