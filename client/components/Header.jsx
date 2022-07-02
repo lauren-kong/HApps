@@ -1,10 +1,29 @@
-import React from 'react'
+import React, { useEffect, useState } from 'react'
+import { useParams } from 'react-router-dom'
+
+import { getRegions, getDistricts } from '../apiClient'
 
 import HeaderTop from './HeaderTop'
 import HeaderBottom from './HeaderBottom'
 
 function Header(props) {
-  const { regions, currentRegion, color, district } = props
+  const { color } = props
+  // const { regions, currentRegion, color, district } = props
+  const { regionCode, districtCode } = useParams()
+  const [regions, setRegions] = useState(null)
+  const [currentRegion, setCurrentRegion] = useState(null)
+  const [district, setDistrict] = useState(null)
+  useEffect(() => {
+    getRegions().then((regionsData) => {
+      setRegions(regionsData)
+      setCurrentRegion(regionsData.find((region) => region.code === regionCode))
+    })
+    getDistricts((districtsData) => {
+      setDistrict(
+        districtsData.find((districtData) => districtData.code === districtCode)
+      )
+    })
+  }, [])
 
   return (
     <div className="outer-header">

@@ -1,4 +1,4 @@
-import React, { useState, useRef } from 'react'
+import React, { useState } from 'react'
 import { useEffect } from 'react'
 import {
   getPostsByRegionCode,
@@ -7,15 +7,11 @@ import {
   deleteImagesOnCloudinary,
 } from '../apiClient'
 import sha256 from 'crypto-js/sha256'
-import { Link } from 'react-router-dom'
 
 function Post(props) {
   const api_key = '739489637624155'
   const api_secret = 'r3LH1BeNQUYG8mAKIXA0w7WvZAQ'
-  const { post, handlePostsUpdate, assignUpdateId, updateState } = props
-  // useEffect(() => {
-  //   console.log(typeof post.postImages[0] === 'object')
-  // }, [])
+  const { post, handlePostsUpdate, onEditMode, updateDelete } = props
 
   const [passwordInDelPrompt, setPasswordInDelPrompt] = useState(null)
   const [passwordInUpdatePrompt, setPasswordInUpdatePrompt] = useState(null)
@@ -92,7 +88,7 @@ function Post(props) {
             formData.append('timestamp', timestamp)
             deleteImagesOnCloudinary(formData).then((res) => {
               console.log(res)
-              updateState()
+              updateDelete()
             })
           })
         }
@@ -107,14 +103,13 @@ function Post(props) {
     // if (password === post.password) {
     //   assignUpdateId(post.postId)
     // }
-
     setPasswordInUpdatePrompt(password)
   }
 
   useEffect(() => {
     if (passwordInUpdatePrompt) {
       if (passwordInUpdatePrompt === post.password) {
-        assignUpdateId(post.postId)
+        onEditMode(post.postId)
       } else {
         setPasswordInUpdatePrompt(
           prompt('The password is incorrect. Try again')

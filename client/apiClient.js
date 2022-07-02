@@ -20,7 +20,7 @@ export function getRegions() {
 
 export function getDistricts() {
   return request
-    .get(`${url}/districts`)
+    .get(`${url}/districts/all`)
     .then((res) => {
       return res.body
     })
@@ -31,7 +31,7 @@ export function getDistricts() {
 
 export function getPostsByRegionCode(code) {
   return request
-    .get(`${url}/${code}`)
+    .get(`${url}/posts/region/${code}`)
     .then((res) => {
       const posts = res.body
       const parsedPosts = posts.map((post) => {

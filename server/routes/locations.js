@@ -38,7 +38,7 @@ router.get('/district/:districtName', (req, res) => {
     })
 })
 
-router.get('/districts', (req, res) => {
+router.get('/districts/all', (req, res) => {
   db.getDistricts()
     .then((response) => {
       res.json(response)
@@ -83,7 +83,7 @@ router.get('/:regionCode/districts', (req, res) => {
     })
 })
 
-router.get('/:regionCode', (req, res) => {
+router.get('/posts/region/:regionCode', (req, res) => {
   const regioncode = req.params.regionCode
   db.getPostsByRegionCode(regioncode)
     .then((posts) => {

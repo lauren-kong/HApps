@@ -1,13 +1,27 @@
 import React from 'react'
-import { useEffect } from 'react'
+import { useState, useEffect } from 'react'
 import Dropdown from 'react-bootstrap/Dropdown'
-import DropdownButton from 'react-bootstrap/DropdownButton'
+import { useParams } from 'react-router-dom'
+
+import { getDistricts } from '../apiClient'
 
 function DistrictsDropdown(props) {
-  const { districts, district } = props
+  // const { districts } = props
+  const { regionCode, districtCode } = useParams()
+  const [districts, setDistricts] = useState(null)
+  const [currentDistrict, setCurrentDistrict] = useState(null)
+
   useEffect(() => {
-    console.log(district)
+    getDistricts().then((districtsData) => {
+      setDistricts(
+        districtsData.filter((distData) => distData.regionCode === regionCode)
+      )
+      setCurrentDistrict(
+        districtsData.find((distData) => distData.code === districtCode)
+      )
+    })
   }, [])
+
   return (
     <>
       <Dropdown className="DISTRICTS_DROPDOWN">
@@ -16,27 +30,34 @@ function DistrictsDropdown(props) {
           id="dropdown-basic"
           className="districts-dropdown-toggle"
         >
-          {district ? district.name : 'All districts'}
+          {currentDistrict ? currentDistrict.name : 'All districts'}
         </Dropdown.Toggle>
-
-        <Dropdown.Menu id="dropdown-menu" className="districts-dropdown-menu">
-          <Dropdown.Item href={`/locations/${districts[0].regionCode}`}>
-            All districts
-          </Dropdown.Item>
-          {districts.map((district) => {
-            return (
-              <Dropdown.Item
-                key={district.id}
-                href={`/locations/${district.regionCode}/${district.code}`}
-              >
-                {district.name}
-              </Dropdown.Item>
-            )
-          })}
-          {/* <Dropdown.Item href="/action-1">Action</Dropdown.Item>
+        {districts ? (
+          <Dropdown.Menu id="dropdown-menu" className="districts-dropdown-menu">
+            <Dropdown.Item
+              href={`/locations/${
+                districts && districts.length > 0
+                  ? districts[0].regionCode
+                  : null
+              }`}
+            >
+              All districts
+            </Dropdown.Item>
+            {districts.map((district) => {
+              return (
+                <Dropdown.Item
+                  key={district.id}
+                  href={`/locations/${district.regionCode}/${district.code}`}
+                >
+                  {district.name}
+                </Dropdown.Item>
+              )
+            })}
+            {/* <Dropdown.Item href="/action-1">Action</Dropdown.Item>
           <Dropdown.Item href="#/action-2">Another action</Dropdown.Item>
           <Dropdown.Item href="#/action-3">Something else</Dropdown.Item> */}
-        </Dropdown.Menu>
+          </Dropdown.Menu>
+        ) : null}
       </Dropdown>
     </>
   )

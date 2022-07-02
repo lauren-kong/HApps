@@ -1,6 +1,6 @@
 import React from 'react'
 import { useEffect, useState, useRef } from 'react'
-import { Link } from 'react-router-dom'
+import { Link, useParams } from 'react-router-dom'
 
 import {
   getDistrictsByRegionCode,
@@ -9,13 +9,19 @@ import {
   getDistrictInfoByName,
   uploadImageToCloudinary,
   getPostById,
+  getRegions,
+  getDistricts,
 } from '../apiClient'
 
 function AddPost(props) {
   // useEffect(() => {},[])
+  const { regionCode, districtCode } = useParams()
+
   const hiddenButton = useRef()
+
   const cloudinaryPreset = 'nh01qzjk'
-  const { region } = props
+
+  const [region, setRegion] = useState(null)
   const [images, setImages] = useState([])
   const imageNames = useRef()
   const fileInputRef = useRef()
@@ -24,14 +30,22 @@ function AddPost(props) {
   const previews = useRef()
   const [preview, setPreview] = useState(null)
   const [uploadedImages, setUploadedImages] = useState([])
-
   const [districtsList, setDistrictsList] = useState(null)
   // console.log(region)
   useEffect(() => {
-    getDistrictsByRegionCode(region.code).then((districts) => {
-      setDistrictsList(districts)
+    getRegions().then((regionsData) => {
+      setRegion(
+        regionsData.find((regionData) => regionData.code === regionCode)
+      )
     })
   }, [])
+  useEffect(() => {
+    if (region) {
+      getDistrictsByRegionCode(region.code).then((districts) => {
+        setDistrictsList(districts)
+      })
+    }
+  }, [region])
 
   useEffect(() => {
     textRef.current.focus()
@@ -55,30 +69,6 @@ function AddPost(props) {
     }
     setImages([...images, ...filesArr])
   }
-
-  // useEffect(() => {
-  // const names = []
-  // if (images.length > 0) {
-  //   images.forEach((image) => {
-  //     names.push(`/images/${image.name}`)
-  //   })
-  // }
-  // imageNames.current = names
-  //   const cloudinaryRes = []
-  //   images.map((image) => {
-  //     // console.log(image)
-  //     const formData = new FormData()
-  //     formData.append('file', image)
-  //     formData.append('upload_preset', cloudinaryPreset)
-  //     uploadImageToCloudinary(formData).then((response) => {
-  //       setUploadedImages([...uploadedImages, response])
-  //     })
-  //   })
-  // }, [images])
-
-  // useEffect(() => {
-  //   console.log(uploadedImages)
-  // }, [uploadedImages])
 
   // FileReader for Each Image  -> for preview
   useEffect(() => {
@@ -149,9 +139,10 @@ function AddPost(props) {
   }
 
   useEffect(() => {
-    getDistrictInfoByName(newPostDistrict).then((distInfo) => {
-      newPostDistrictCode.current = distInfo.code
-    })
+    newPostDistrict &&
+      getDistrictInfoByName(newPostDistrict).then((distInfo) => {
+        newPostDistrictCode.current = distInfo.code
+      })
   }, [newPostDistrict])
 
   const [newPostEvent, setNewPostEvent] = useState(null)
@@ -344,7 +335,10 @@ function AddPost(props) {
             onChange={handlePasswordChange}
           />
           <button onClick={handleFormSubmit}>Post</button>
-          <Link to={`/locations/${region.code}`} ref={hiddenButton}>
+          <Link
+            to={`/locations/${region ? region.code : null}`}
+            ref={hiddenButton}
+          >
             <button hidden="hidden">Move</button>
           </Link>
         </div>

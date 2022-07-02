@@ -1,111 +1,91 @@
 import React from 'react'
+import { useEffect, useState } from 'react'
+
+import { useParams } from 'react-router-dom'
 
 import Post from './Post'
 import EditPost from './EditPost'
-import { useEffect, useState } from 'react'
-import { getRegions, getPostsByRegionCode, getPostById } from '../apiClient'
+import { getPostsByRegionCode, getPostById } from '../apiClient'
 
 function Posts(props) {
   //JAVASCRIPT
-  const { region, district } = props
-  const [updated, setUpdated] = useState(false)
+  const { regionCode, districtCode } = useParams()
   const [posts, setPosts] = useState(null)
-  const [validPosts, setValidPosts] = useState(null)
-  const [editMode, setEditMode] = useState(false)
-  const [updateId, setUpdateId] = useState(null)
-  const [postToBeUpdated, setPostToBeUpdated] = useState(null)
-  useEffect(() => {
-    getPostsByRegionCode(region.code).then((postsData) => {
-      setPosts(postsData)
-    })
-    console.log(district)
-  }, [])
-  useEffect(() => {
-    getPostsByRegionCode(region.code).then((postsData) => {
-      setPosts(postsData)
-    })
-    // console.log(posts)
-  }, [updated])
 
+  // const [validPosts, setValidPosts] = useState(null)
+  const [editMode, setEditMode] = useState(false)
+  const [editId, setEditId] = useState(null)
+  const [postToEdit, setPostToEdit] = useState(null)
+  const [toggleChanges, setToggleChanges] = useState(false)
   useEffect(() => {
-    console.log('posts', posts)
-    if (posts) {
-      const valid = posts.filter((post) => {
+    getPostsByRegionCode(regionCode).then((postsData) => {
+      const valid = postsData.filter((post) => {
         const now = new Date().getTime()
         const differenceMin = (now - post.postedTime) / 1000 / 60
-        console.log('diff', differenceMin)
         return differenceMin < 60
       })
-      console.log('valid', valid)
-      setValidPosts(valid)
+      setPosts(valid)
+    })
+  }, [editMode, toggleChanges])
+
+  useEffect(() => {
+    if (editMode && editId) {
+      getPostById(editId).then((post) => {
+        setPostToEdit(post)
+      })
     }
   }, [posts])
 
-  function updateState() {
-    if (updated) {
-      setUpdated(false)
-    } else {
-      setUpdated(true)
-    }
+  function onEditMode(id) {
+    setEditMode(true)
+    setEditId(id)
   }
 
   function offEditMode() {
     setEditMode(false)
+    setEditId(null)
+    setPostToEdit(null)
   }
-
-  function assignUpdateId(id) {
-    setUpdateId(id)
-  }
-
-  useEffect(() => {
-    if (updateId) {
-      setEditMode(true)
-    }
-  }, [updateId])
-
-  useEffect(() => {
-    if (editMode) {
-      getPostById(updateId).then((post) => {
-        setPostToBeUpdated(post)
-      })
-    }
-  }, [editMode])
 
   function handlePostsUpdate(updatePosts) {
     setPosts(updatePosts)
+  }
+
+  function toggleChangeHandler() {
+    setToggleChanges(!toggleChanges)
   }
 
   //JSX
   return (
     <div className="below-header">
       <div className="ghost-div"></div>
-      {!editMode && validPosts && !district
-        ? validPosts.map((post) => {
+      {!editMode && posts && !districtCode
+        ? posts.map((post) => {
             return (
               <div key={post.postId} className="display-posts">
                 <Post
                   key={post.postId}
                   post={post}
                   handlePostsUpdate={handlePostsUpdate}
-                  assignUpdateId={assignUpdateId}
-                  updateState={updateState}
+                  onEditMode={onEditMode}
+                  updateDelete={toggleChangeHandler}
                 />
               </div>
             )
           })
         : null}
 
-      {district && validPosts
-        ? validPosts.map((post) => {
+      {posts && districtCode
+        ? posts.map((post, index) => {
             return (
               <div key={post.postId} className="display-posts">
-                {post.districtCode === district.code ? (
+                {post.districtCode === districtCode ? (
                   <Post
                     key={post.postId}
                     post={post}
                     handlePostsUpdate={handlePostsUpdate}
-                    assignUpdateId={assignUpdateId}
-                    updateState={updateState}
+                    onEditMode={onEditMode}
+                    updateDelete={toggleChangeHandler}
                   />
                 ) : null}
               </div>
@@ -113,14 +93,11 @@ function Posts(props) {
           })
         : null}
 
-      {editMode && postToBeUpdated ? (
-        <div key={postToBeUpdated.postId} className="display-posts">
+      {editMode && postToEdit ? (
+        <div key={postToEdit.postId} className="display-posts">
           <EditPost
-            key={postToBeUpdated.postId}
-            post={postToBeUpdated}
-            handlePostsUpdate={handlePostsUpdate}
-            assignUpdateId={assignUpdateId}
-            updateState={updateState}
+            key={postToEdit.postId}
+            post={postToEdit}
             offEditMode={offEditMode}
           />
         </div>
