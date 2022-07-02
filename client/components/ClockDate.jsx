@@ -1,21 +1,50 @@
 import React, { useEffect, useState } from 'react'
-import { useMemo } from 'react'
+import { useParams } from 'react-router-dom'
 import Clock from 'react-live-clock'
 
+import {
+  getRegions,
+  getDistricts,
+  getDistrictsByRegionCode,
+} from '../apiClient'
+
 function ClockDate(props) {
-  const { region, district } = props
-  const regionName = region?.name
-  const [weatherInfo, setWeatherInfo] = useState({})
+  // const { region, district } = props
+  const { regionCode, districtCode } = useParams()
+  const [region, setRegion] = useState(null)
+  const [district, setDistrict] = useState(null)
+  const [weatherInfo, setWeatherInfo] = useState(null)
+
+  useEffect(() => {
+    getRegions().then((regionsData) => {
+      setRegion(
+        regionsData.find((regionData) => regionData.code === regionCode)
+      )
+    })
+    if (districtCode) {
+      getDistricts().then((districtsData) => {
+        setDistrict(
+          districtsData.find(
+            (districtData) => districtData.code === districtCode
+          )
+        )
+      })
+    }
+  }, [])
 
   useEffect(() => {
     if (district) {
-      console.log('district:', district)
       setWeatherInfo({
         name: district.weatherLocName,
         type: district.weatherLocType,
       })
+    } else if (!district && region) {
+      setWeatherInfo({
+        name: region.weatherLocName,
+        type: region.weatherLocType,
+      })
     }
-  }, [district])
+  }, [district, region])
 
   useEffect(() => {
     if (weatherInfo) {

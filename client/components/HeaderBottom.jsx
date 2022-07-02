@@ -1,21 +1,28 @@
 import React from 'react'
 import { useEffect, useState } from 'react'
-import { Link } from 'react-router-dom'
+import { Link, useParams } from 'react-router-dom'
 
 import DistrictsDropdown from './DistrictsDropdown'
 
-import { getDistrictsByRegionCode } from '../apiClient'
+import { getDistricts, getRegions } from '../apiClient'
 
 function HeaderBottom(props) {
-  const { currentRegion, currentDistrict, district } = props
+  const { regionCode, districtCode } = useParams()
   const [districts, setDistricts] = useState(null)
-
-  // console.log(currentDistrict)
-  // console.log(currentRegion)
+  const [currentDistrict, setCurrentDistrict] = useState(null)
+  const [currentRegion, setCurrentRegion] = useState(null)
 
   useEffect(() => {
-    getDistrictsByRegionCode(currentRegion.code).then((distArr) => {
-      setDistricts(distArr)
+    getRegions().then((regionsData) => {
+      setCurrentRegion(
+        regionsData.find((regionData) => regionData.code === regionCode)
+      )
+    })
+    getDistricts().then((districtsData) => {
+      setDistricts(districtsData)
+      setCurrentDistrict(
+        districtsData.find((districtData) => districtData.code === districtCode)
+      )
     })
   }, [])
 
@@ -40,28 +47,27 @@ function HeaderBottom(props) {
       </div>
       <div className="header-bottom-mid">
         <div className="header-bottom-current-region-name">
-          {currentRegion.name}
+          {currentRegion ? currentRegion.name : null}
         </div>
         <div className="header-bottom-districts-and-button">
           {districts ? (
-            <DistrictsDropdown districts={districts} district={district} />
+            <DistrictsDropdown
+              districts={districts}
+              district={currentDistrict}
+            />
           ) : null}
-          <div className="share-event-button-div">
-            {currentDistrict ? (
-              <Link
-                to={`/locations/${currentRegion.code}/${currentDistrict.code}/addPost`}
-              >
-                <button>Share Event</button>
-              </Link>
-            ) : (
+
+          {currentRegion && (
+            <div className="share-event-button-div">
               <Link to={`/locations/${currentRegion.code}/addPost`}>
-                <button>Share Event</button>
+                <button className="add-button">
+                  <i className="fa-solid fa-plus"></i>
+                </button>
               </Link>
-            )}
-          </div>
+            </div>
+          )}
         </div>
       </div>
-
       <div className="header-bottom-right"></div>
     </>
   )

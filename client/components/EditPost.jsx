@@ -7,36 +7,21 @@ import {
   deletePost,
   deleteImagesOnCloudinary,
   updatePost,
+  getPostsByDistrictCode,
 } from '../apiClient'
 
 function EditPost(props) {
-  console.log(props)
-
   const api_key = '739489637624155'
   const api_secret = 'r3LH1BeNQUYG8mAKIXA0w7WvZAQ'
-  const {
-    post,
-    handlePostsUpdate,
-    updateToEditMode,
-    updateState,
-    offEditMode,
-  } = props
-  // useEffect(() => {
-  //   console.log(typeof post.postImages[0] === 'object')
-  // }, [])
+  const { post, offEditMode } = props
 
   const firstInputRef = useRef()
 
   const [passwordInPrompt, setPasswordInPrompt] = useState(null)
-
   const [imageNum, setImageNum] = useState(0)
-
-  const [isInitialRender, setIsInitialRender] = useState(true)
-
   const [updatedEventName, setUpdatedEventName] = useState(post.eventName)
   const [updatedLocation, setUpdatedLocation] = useState(post.location)
   const [updatedDescription, setUpdatedDescription] = useState(post.description)
-  const [updatedPassword, setUpdatedPassword] = useState(post.password)
 
   function handlePrevClick(e) {
     e.preventDefault()
@@ -51,7 +36,6 @@ function EditPost(props) {
   }
 
   useEffect(() => {
-    setIsInitialRender(false)
     firstInputRef.current.focus()
   }, [])
 
@@ -59,11 +43,6 @@ function EditPost(props) {
     e.preventDefault()
   }
 
-  function binButtonClickHandler(e) {
-    e.preventDefault()
-    const current = prompt('Please enter post password')
-    setPasswordInPrompt(current)
-  }
   useEffect(() => {
     if (!passwordInPrompt) {
       return null
@@ -105,11 +84,6 @@ function EditPost(props) {
   }
 
   function updateButtonClickHandler(e) {
-    console.log('id', post.id)
-    console.log('eventName', updatedEventName)
-    console.log('location', updatedLocation)
-    console.log('description', updatedDescription)
-
     const updated = {
       id: post.id,
       eventName: updatedEventName,
@@ -117,7 +91,6 @@ function EditPost(props) {
       description: updatedDescription,
     }
     updatePost(updated).then((res) => {
-      console.log(res)
       offEditMode()
     })
   }
@@ -151,23 +124,11 @@ function EditPost(props) {
         </button>
       </div>
 
-      {/* Post - Reliability Button */}
-      <div className="reliab-div edit">
-        {/* {reliabClicked && (
-          <div className="fa-button" onClick={handleReliabClick}>
-            <i className="fa-solid fa-thumbs-up"></i>
-          </div>
-        )}
-        {!reliabClicked && (
-          <div className="fa-button" onClick={handleReliabClick}>
-            <i className="fa-regular fa-thumbs-up"></i>
-          </div>
-        )} */}
-      </div>
-
       {/* Post - Details */}
       <div className="post-details edit">
-        <div className="post-time">{post.postedTime}</div>
+        <div className="post-time">
+          {new Date(post.postedTime).toLocaleString('en-NZ')}
+        </div>
         <div className="post-event edit">
           <input
             ref={firstInputRef}
@@ -196,9 +157,6 @@ function EditPost(props) {
       </div>
 
       <div>
-        {/* <button onClick={binButtonClickHandler}>
-          <i className="fa-solid fa-trash-can"></i>
-        </button> */}
         <button onClick={updateButtonClickHandler}>Update</button>
       </div>
     </div>
