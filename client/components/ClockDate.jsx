@@ -2,11 +2,7 @@ import React, { useEffect, useState } from 'react'
 import { useParams } from 'react-router-dom'
 import Clock from 'react-live-clock'
 
-import {
-  getRegions,
-  getDistricts,
-  getDistrictsByRegionCode,
-} from '../apiClient'
+import { getRegions, getDistricts } from '../apiClient'
 
 function ClockDate(props) {
   // const { region, district } = props
@@ -54,122 +50,6 @@ function ClockDate(props) {
 
   const [loc, setLoc] = useState(null)
   const [type, setType] = useState(null)
-
-  // useEffect(() => {
-  //   switch (districtName) {
-  //     case 'Auckland City':
-  //     case 'Hauraki Gulf Island':
-  //     case 'Waiheke Island':
-  //     case 'Franklin':
-  //       setLoc('auckland')
-  //       setType('urban')
-  //       break
-  //     case 'Manukau City':
-  //       setLoc('manukau')
-  //       setType('urban')
-  //       break
-  //     case 'North Shore City':
-  //       setLoc('north-shore')
-  //       setType('urban')
-  //       break
-  //     case 'Papakura':
-  //       setLoc('hunua')
-  //       setType('urban')
-  //       break
-  //     case 'Rodney':
-  //       setLoc('warkworth')
-  //       setType('rural')
-  //       break
-  //     case 'Waitakere City':
-  //       setLoc('waitakere')
-  //       setType('urban')
-  //       break
-  //     case 'Hamilton':
-  //     case 'Waikato':
-  //       setLoc('hamilton')
-  //       setType('urban')
-  //       break
-  //     case 'Hauraki':
-  //       setLoc('paeroa')
-  //       setType('rural')
-  //       break
-  //     case 'Matamata-Piako':
-  //       setLoc('matamata')
-  //       setType('rural')
-  //       break
-  //     case 'Otorohanga':
-  //     case 'Waipa':
-  //     case 'Waitomo':
-  //       setLoc('te-awamutu')
-  //       setType('rural')
-  //       break
-  //     case 'South Waikato':
-  //       setLoc('tokoroa')
-  //       setType('urban')
-  //       break
-  //     case 'Taupo':
-  //       setLoc('taupo')
-  //       setType('urban')
-  //       break
-  //     case 'Thames-Coromandel':
-  //       setLoc('thames')
-  //       setType('urban')
-  //       break
-  //     case 'Kawerau':
-  //     case 'Opotiki':
-  //     case 'Whakatane':
-  //       setLoc('whakatane')
-  //       setType('urban')
-  //       break
-  //     case 'Rotorua':
-  //       setLoc('rotorua')
-  //       setType('urban')
-  //       break
-  //     case 'Tauranga':
-  //     case 'Western Bay Of Plenty':
-  //       setLoc('tauranga')
-  //       setType('urban')
-  //       break
-  //     case 'New Plymouth':
-  //       setLoc('new-plymouth')
-  //       setType('urban')
-  //       break
-  //     case 'South Taranaki':
-  //     case 'Stratford':
-  //     case 'Whanganui':
-  //       setLoc('wanganui')
-  //       setType('urban')
-  //       break
-  //     case 'Horowhenua':
-  //     case 'Manawatu':
-  //     case 'Palmerston North':
-  //       setLoc('palmerston-north')
-  //       setType('urban')
-  //       break
-  //     case 'Rangitikei':
-  //     case 'Ruapehu':
-  //       setLoc('waiouru')
-  //       setType('rural')
-  //       break
-  //     case 'Carterton':c
-  //       setLoc('masterton')
-  //       setType('rural')
-  //       break
-
-  //     case 'Kapiti Coast':
-  //       setLoc('te-horo')
-  //       setType('rural')
-  //       break
-  //     case 'Lower Hutt':
-  //       setLoc('lower-hutt')
-  //       setType('urban')
-  //   }
-  // }, [])
-
-  // useEffect(() => {
-  //   console.log(regionName)
-  //   console.log(districtName)
-  // }, [])
 
   function blockWeatherClick(e) {
     e.preventDefault()

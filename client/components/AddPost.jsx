@@ -5,12 +5,10 @@ import { Link, useParams } from 'react-router-dom'
 import {
   getDistrictsByRegionCode,
   addPost,
-  getPostsByRegionCode,
   getDistrictInfoByName,
   uploadImageToCloudinary,
   getPostById,
   getRegions,
-  getDistricts,
 } from '../apiClient'
 
 function AddPost(props) {
@@ -130,7 +128,9 @@ function AddPost(props) {
   const [newPostDistrict, setNewPostDistrict] = useState('')
   const newPostDistrictCode = useRef('')
   useEffect(() => {
-    districtsList && setNewPostDistrict(districtsList[0].name)
+    districtsList &&
+      districtsList.length > 0 &&
+      setNewPostDistrict(districtsList[0].name)
   }, [districtsList])
 
   function handleDistrictChange(e) {

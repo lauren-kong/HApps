@@ -11,20 +11,6 @@ import ClockDate from './ClockDate'
 import { Routes, Route } from 'react-router-dom'
 
 const App = () => {
-  //JAVASCRIPT
-  // const [regions, setRegions] = useState(null)
-  // const [districts, setDistricts] = useState(null)
-
-  // useEffect(() => {
-  //   getRegions().then((regionsData) => {
-  //     setRegions(regionsData)
-  //   })
-  //   getDistricts().then((districtsData) => {
-  //     setDistricts(districtsData)
-  //   })
-  // }, [])
-
-  //JSX
   return (
     <div className="app">
       <Routes>
@@ -70,18 +56,16 @@ const App = () => {
           }
         />
 
-        {/* LOCATIONS PAGE */}
         <Route
           path="/locations"
           element={
             <>
-              <HeaderTop color="main" />
+              <HeaderTop />
               <Locations />
             </>
           }
         />
 
-        {/* HOME PAGE */}
         <Route key="home" path="/" element={<Home />} />
       </Routes>
     </div>

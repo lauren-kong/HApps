@@ -5,7 +5,6 @@ import Dropdown from 'react-bootstrap/Dropdown'
 import { getRegions } from '../apiClient'
 
 function RegionDropdown(props) {
-  // const { regions } = props
   const [regions, setRegions] = useState(null)
   useEffect(() => {
     getRegions().then((regionsData) => {
@@ -32,9 +31,6 @@ function RegionDropdown(props) {
                 )
               })
             : null}
-          {/* <Dropdown.Item href="/action-1">Action</Dropdown.Item>
-          <Dropdown.Item href="#/action-2">Another action</Dropdown.Item>
-          <Dropdown.Item href="#/action-3">Something else</Dropdown.Item> */}
         </Dropdown.Menu>
       </Dropdown>
     </>

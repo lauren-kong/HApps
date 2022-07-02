@@ -132,6 +132,10 @@ body {
   flex: 1;
 }
 
+.no-underline {
+  text-decoration: none;
+}
+
 .clock {
   position: fixed;
   z-index: 200;

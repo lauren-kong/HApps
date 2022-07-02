@@ -1,14 +1,7 @@
 import React, { useState, useEffect, useRef } from 'react'
 import sha256 from 'crypto-js/sha256'
 
-import {
-  getPostsByRegionCode,
-  updatePostClicked,
-  deletePost,
-  deleteImagesOnCloudinary,
-  updatePost,
-  getPostsByDistrictCode,
-} from '../apiClient'
+import { deletePost, deleteImagesOnCloudinary, updatePost } from '../apiClient'
 
 function EditPost(props) {
   const api_key = '739489637624155'
