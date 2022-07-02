@@ -13,16 +13,23 @@ function HeaderBottom(props) {
   const [currentRegion, setCurrentRegion] = useState(null)
 
   useEffect(() => {
-    getRegions().then((regionsData) => {
-      setCurrentRegion(
-        regionsData.find((regionData) => regionData.code === regionCode)
-      )
-    })
+    if (regionCode && !districtCode) {
+      getRegions().then((regionsData) => {
+        setCurrentRegion(
+          regionsData.find((regionData) => regionData.code === regionCode)
+        )
+      })
+    }
+
     getDistricts().then((districtsData) => {
       setDistricts(districtsData)
-      setCurrentDistrict(
-        districtsData.find((districtData) => districtData.code === districtCode)
-      )
+      if (districtCode) {
+        setCurrentDistrict(
+          districtsData.find(
+            (districtData) => districtData.code === districtCode
+          )
+        )
+      }
     })
   }, [])
 
@@ -46,16 +53,18 @@ function HeaderBottom(props) {
         </div> */}
       </div>
       <div className="header-bottom-mid">
-        <div className="header-bottom-current-region-name">
+        <div
+          className="header-bottom-current-region-name"
+          id={
+            currentRegion && currentRegion.name === 'Manawatu Whanganui'
+              ? 'long'
+              : ''
+          }
+        >
           {currentRegion ? currentRegion.name : null}
         </div>
         <div className="header-bottom-districts-and-button">
-          {districts ? (
-            <DistrictsDropdown
-              districts={districts}
-              district={currentDistrict}
-            />
-          ) : null}
+          <DistrictsDropdown />
 
           {currentRegion && (
             <div className="share-event-button-div">
