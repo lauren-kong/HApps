@@ -13,14 +13,21 @@ function DistrictsDropdown(props) {
 
   useEffect(() => {
     getDistricts().then((districtsData) => {
+      console.log(districtsData)
       setDistricts(
         districtsData.filter((distData) => distData.regionCode === regionCode)
       )
-      setCurrentDistrict(
-        districtsData.find((distData) => distData.code === districtCode)
-      )
+      if (districtCode) {
+        setCurrentDistrict(
+          districtsData.find((distData) => distData.code === districtCode)
+        )
+      }
     })
   }, [])
+
+  useEffect(() => {
+    console.log(districts)
+  }, [districts])
 
   return (
     <>
@@ -34,13 +41,7 @@ function DistrictsDropdown(props) {
         </Dropdown.Toggle>
         {districts ? (
           <Dropdown.Menu id="dropdown-menu" className="districts-dropdown-menu">
-            <Dropdown.Item
-              href={`/locations/${
-                districts && districts.length > 0
-                  ? districts[0].regionCode
-                  : null
-              }`}
-            >
+            <Dropdown.Item href={`/locations/${regionCode}`}>
               All districts
             </Dropdown.Item>
             {districts.map((district) => {
@@ -53,9 +54,6 @@ function DistrictsDropdown(props) {
                 </Dropdown.Item>
               )
             })}
-            {/* <Dropdown.Item href="/action-1">Action</Dropdown.Item>
-          <Dropdown.Item href="#/action-2">Another action</Dropdown.Item>
-          <Dropdown.Item href="#/action-3">Something else</Dropdown.Item> */}
           </Dropdown.Menu>
         ) : null}
       </Dropdown>

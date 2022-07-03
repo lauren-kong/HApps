@@ -119,6 +119,7 @@ body {
   gap: 20px;
   align-items: center;
 }
+
 .header-bottom-left {
   flex: 1;
   display: flex;
@@ -129,6 +130,10 @@ body {
 }
 .header-bottom-right {
   flex: 1;
+}
+
+.no-underline {
+  text-decoration: none;
 }
 
 .clock {
@@ -174,6 +179,14 @@ body {
 .header-bottom-current-region-name {
   font-size: 4.5rem;
   color: white;
+  text-align: center;
+  /* margin-top: 20px; */
+}
+
+.header-bottom-current-region-name#long {
+  font-size: 3.5rem;
+  color: white;
+  line-height: 1;
   /* margin-top: 20px; */
 }
 .header-bottom-districts-and-button {

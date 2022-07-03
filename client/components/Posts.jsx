@@ -11,22 +11,27 @@ function Posts(props) {
   //JAVASCRIPT
   const { regionCode, districtCode } = useParams()
   const [posts, setPosts] = useState(null)
-
-  // const [validPosts, setValidPosts] = useState(null)
+  const [validPosts, setValidPosts] = useState(null)
   const [editMode, setEditMode] = useState(false)
   const [editId, setEditId] = useState(null)
   const [postToEdit, setPostToEdit] = useState(null)
   const [toggleChanges, setToggleChanges] = useState(false)
   useEffect(() => {
     getPostsByRegionCode(regionCode).then((postsData) => {
-      const valid = postsData.filter((post) => {
+      setPosts(postsData)
+    })
+  }, [editMode, toggleChanges])
+
+  useEffect(() => {
+    if (posts) {
+      const valid = posts.filter((post) => {
         const now = new Date().getTime()
         const differenceMin = (now - post.postedTime) / 1000 / 60
         return differenceMin < 60
       })
-      setPosts(valid)
-    })
-  }, [editMode, toggleChanges])
+      setValidPosts(valid)
+    }
+  }, [posts])
 
   useEffect(() => {
     if (editMode && editId) {
@@ -34,7 +39,7 @@ function Posts(props) {
         setPostToEdit(post)
       })
     }
-  }, [posts])
+  }, [validPosts])
 
   function onEditMode(id) {
     setEditMode(true)
@@ -59,8 +64,8 @@ function Posts(props) {
   return (
     <div className="below-header">
       <div className="ghost-div"></div>
-      {!editMode && posts && !districtCode
-        ? posts.map((post) => {
+      {!editMode && validPosts && !districtCode
+        ? validPosts.map((post) => {
             return (
               <div key={post.postId} className="display-posts">
                 <Post
@@ -75,8 +80,8 @@ function Posts(props) {
           })
         : null}
 
-      {posts && districtCode
-        ? posts.map((post, index) => {
+      {validPosts && districtCode
+        ? validPosts.map((post, index) => {
             return (
               <div key={post.postId} className="display-posts">
                 {post.districtCode === districtCode ? (

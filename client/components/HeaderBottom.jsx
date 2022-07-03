@@ -13,49 +13,43 @@ function HeaderBottom(props) {
   const [currentRegion, setCurrentRegion] = useState(null)
 
   useEffect(() => {
-    getRegions().then((regionsData) => {
-      setCurrentRegion(
-        regionsData.find((regionData) => regionData.code === regionCode)
-      )
-    })
+    if (regionCode) {
+      getRegions().then((regionsData) => {
+        setCurrentRegion(
+          regionsData.find((regionData) => regionData.code === regionCode)
+        )
+      })
+    }
     getDistricts().then((districtsData) => {
       setDistricts(districtsData)
-      setCurrentDistrict(
-        districtsData.find((districtData) => districtData.code === districtCode)
-      )
+      if (districtCode) {
+        setCurrentDistrict(
+          districtsData.find(
+            (districtData) => districtData.code === districtCode
+          )
+        )
+      }
     })
   }, [])
 
   return (
     <>
-      <div className="header-bottom-left">
-        {/* <div className="clock">
-          <Clock
-            format={'dddd DD MMMM YYYY'}
-            ticking={true}
-            timezone={'NZ'}
-            className="clock-day"
-          />
-
-          <Clock
-            format={'h:m a'}
-            ticking={true}
-            timezone={'NZ'}
-            className="clock-time"
-          />
-        </div> */}
-      </div>
+      <div className="header-bottom-left"></div>
       <div className="header-bottom-mid">
-        <div className="header-bottom-current-region-name">
-          {currentRegion ? currentRegion.name : null}
-        </div>
+        <Link to={`/locations/${regionCode}`} className="no-underline">
+          <div
+            className="header-bottom-current-region-name"
+            id={
+              currentRegion && currentRegion.name === 'Manawatu Whanganui'
+                ? 'long'
+                : ''
+            }
+          >
+            {currentRegion ? currentRegion.name : null}
+          </div>
+        </Link>
         <div className="header-bottom-districts-and-button">
-          {districts ? (
-            <DistrictsDropdown
-              districts={districts}
-              district={currentDistrict}
-            />
-          ) : null}
+          <DistrictsDropdown />
 
           {currentRegion && (
             <div className="share-event-button-div">
