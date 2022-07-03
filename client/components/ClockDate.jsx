@@ -12,11 +12,6 @@ function ClockDate(props) {
   const [weatherInfo, setWeatherInfo] = useState(null)
 
   useEffect(() => {
-    getRegions().then((regionsData) => {
-      setRegion(
-        regionsData.find((regionData) => regionData.code === regionCode)
-      )
-    })
     if (districtCode) {
       getDistricts().then((districtsData) => {
         setDistrict(
@@ -26,6 +21,11 @@ function ClockDate(props) {
         )
       })
     }
+    getRegions().then((regionsData) => {
+      setRegion(
+        regionsData.find((regionData) => regionData.code === regionCode)
+      )
+    })
   }, [])
 
   useEffect(() => {
@@ -69,16 +69,18 @@ function ClockDate(props) {
         timezone={'NZ'}
         className="clock-time"
       />
-      <iframe
-        id="widget-iframe"
-        width="280px"
-        height="113px"
-        src={`https://services.metservice.com/weather-widget/widget?params=blue|small|landscape|days-1|modern&loc=${
-          weatherInfo ? weatherInfo.name : 'auckland'
-        }&type=${weatherInfo ? weatherInfo.type : 'urban'}`}
-        allowtransparency="true"
-        style={{ border: 'none' }}
-      ></iframe>
+      {weatherInfo ? (
+        <iframe
+          id="widget-iframe"
+          width="280px"
+          height="113px"
+          src={`https://services.metservice.com/weather-widget/widget?params=blue|small|landscape|days-1|modern&loc=${
+            weatherInfo ? weatherInfo.name : ''
+          }&type=${weatherInfo ? weatherInfo.type : 'urban'}`}
+          allowtransparency="true"
+          style={{ border: 'none' }}
+        ></iframe>
+      ) : null}
     </div>
   )
 }

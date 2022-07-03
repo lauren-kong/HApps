@@ -171,7 +171,7 @@ function Post(props) {
         <div className="post-description">{post.description}</div>
       </div>
 
-      <div>
+      <div className="del-edit-buttons">
         <button onClick={binButtonClickHandler}>
           <i className="fa-solid fa-trash-can"></i>
         </button>

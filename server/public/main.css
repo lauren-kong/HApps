@@ -414,6 +414,20 @@ body {
   color: gray;
 }
 
+.del-edit-buttons {
+  display: flex;
+  gap: 10px;
+  margin-top: 10px;
+}
+.del-edit-buttons > button {
+  display: block;
+  background-color: rgba(193, 189, 189, 0.687);
+  border: none;
+  border-radius: 5px;
+  color: white;
+  cursor: pointer;
+  height: 30px;
+}
 /*---------------ADD POST------------------*/
 
 .add-form-main {
@@ -593,6 +607,11 @@ textarea:focus {
   margin-right: 20px;
   margin-bottom: 20px;
 }
+
+.post-description.edit {
+  border-bottom: none;
+}
+
 .post-event.edit {
   margin-top: 20px;
 }
@@ -612,4 +631,19 @@ textarea:focus {
 
 .reliab-div.edit {
   height: 30px;
+}
+
+.update-button {
+  display: flex;
+  margin-top: 20px;
+}
+
+.update-button > button {
+  display: block;
+  width: 100px;
+  height: 30px;
+  background-color: var(--main-color-main3-transparent);
+  border: none;
+  border-radius: 5px;
+  color: white;
 }
