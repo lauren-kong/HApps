@@ -149,7 +149,7 @@ function EditPost(props) {
         </div>
       </div>
 
-      <div>
+      <div className="update-button">
         <button onClick={updateButtonClickHandler}>Update</button>
       </div>
     </div>
