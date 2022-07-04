@@ -4,13 +4,10 @@ import sha256 from 'crypto-js/sha256'
 import { deletePost, deleteImagesOnCloudinary, updatePost } from '../apiClient'
 
 function EditPost(props) {
-  const api_key = '739489637624155'
-  const api_secret = 'r3LH1BeNQUYG8mAKIXA0w7WvZAQ'
   const { post, offEditMode } = props
 
   const firstInputRef = useRef()
 
-  const [passwordInPrompt, setPasswordInPrompt] = useState(null)
   const [imageNum, setImageNum] = useState(0)
   const [updatedEventName, setUpdatedEventName] = useState(post.eventName)
   const [updatedLocation, setUpdatedLocation] = useState(post.location)
@@ -20,6 +17,7 @@ function EditPost(props) {
     e.preventDefault()
     imageNum > 0 ? setImageNum(imageNum - 1) : setImageNum(0)
   }
+  1
 
   function handleNextClick(e) {
     e.preventDefault()
@@ -35,34 +33,6 @@ function EditPost(props) {
   function handleImageClick(e) {
     e.preventDefault()
   }
-
-  useEffect(() => {
-    if (!passwordInPrompt) {
-      return null
-    } else if (passwordInPrompt === post.password) {
-      console.log('need to delete this post')
-      deletePost(post.postId).then((res) => {
-        if (typeof post.postImages[0] === 'object') {
-          post.postImages.map((img) => {
-            const timestamp = new Date().getTime()
-            const string = `public_id=${img.publicId}&timestamp=${timestamp}${api_secret}`
-            const signature = sha256(string)
-            const formData = new FormData()
-            console.log(img.signature)
-            formData.append('public_id', img.publicId)
-            formData.append('signature', signature)
-            formData.append('api_key', api_key)
-            formData.append('timestamp', timestamp)
-            deleteImagesOnCloudinary(formData).then((res) => {
-              console.log(res)
-            })
-          })
-        }
-      })
-    } else {
-      setPasswordInPrompt(prompt('The password is incorrect. Try again'))
-    }
-  }, [passwordInPrompt])
 
   function eventNameChangeHandler(e) {
     setUpdatedEventName(e.target.value)
