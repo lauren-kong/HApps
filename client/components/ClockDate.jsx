@@ -65,7 +65,7 @@ function ClockDate(props) {
         />
         {weatherInfo ? (
           <iframe
-            className="large-weather"
+            className="large-and-small-weather"
             id="widget-iframe"
             width="280px"
             height="113px"
