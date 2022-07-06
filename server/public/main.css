@@ -44,12 +44,14 @@ body {
 } */
 
 /*---------------HEADER----------------*/
+
 .outer-header {
   font-size: 0.8rem;
+  display: flex;
+  flex-direction: column;
 }
 .header-top-inner {
   background-color: var(--main-color-main1);
-
   display: flex;
   flex-direction: row;
   /* justify-content: space-between; */
@@ -67,7 +69,7 @@ body {
 }
 
 .header-top-mid {
-  width: 520px;
+  flex: 1;
   display: flex;
   margin-top: auto;
   margin-bottom: auto;
@@ -96,6 +98,7 @@ body {
 
 .header-bottom {
   display: flex;
+  flex-direction: column;
   /* justify-content: space-between; */
   align-items: center;
   width: 100%;
@@ -112,7 +115,7 @@ body {
   z-index: 100;
 }
 .header-bottom-mid {
-  width: 520px;
+  flex: 1;
   height: 100%;
   display: flex;
   flex-direction: column;
@@ -149,8 +152,8 @@ body {
   align-items: center;
   /* width: 250px;
   height: 120px; */
-  padding: 15px;
-  margin-top: -350px;
+  padding: 10px;
+  margin-top: 60px;
   margin-left: 40px;
   text-align: center;
 }
@@ -161,6 +164,7 @@ body {
   font-weight: bold;
   /* color: rgb(255, 255, 255); */
 }
+
 .clock-time {
   font-size: 2.5rem;
   font-weight: bold;
@@ -220,6 +224,47 @@ body {
   z-index: 0;
 }
 
+/* pad friendly */
+@media screen and (max-width: 1200px) {
+  .clock-day,
+  .cloc-date,
+  .clock-time {
+    display: none;
+  }
+  .clock {
+    border: none;
+    position: fixed;
+    z-index: 200;
+    margin-top: 0;
+    margin-left: 0;
+  }
+
+  .large-weather {
+    display: none;
+  }
+  .medium-weather {
+    display: block;
+    border: none;
+    position: fixed;
+    z-index: 200;
+    margin-top: 30px;
+    margin-left: 30px;
+  }
+  div#wx-widget.wx-.wx-days-1.wx-small.wx-modern.wx-portrait.wx-white {
+    background: var(--main-color-main1) !important;
+  }
+}
+
+/* mobile friendly */
+@media screen and (max-width: 768px) {
+  .medium-weather {
+    display: none;
+  }
+
+  div#wx-widget.wx-.wx-days-1.wx-small.wx-modern.wx-portrait.wx-white {
+    background: var(--main-color-main1) !important;
+  }
+}
 /*---------------LOCATIONS------------------*/
 
 .locations {
@@ -280,6 +325,7 @@ body {
   color: white;
   text-align: center;
 }
+
 /*---------------POSTS------------------*/
 
 .ghost-div {
@@ -428,6 +474,21 @@ body {
   cursor: pointer;
   height: 30px;
 }
+
+/* pad friendly */
+@media screen and (max-width: 1200px) {
+  /* .ghost-div {
+    height: 0;
+  } */
+}
+
+/* mobile friendly */
+@media screen and (max-width: 768px) {
+  .each-post {
+    border: none;
+  }
+}
+
 /*---------------ADD POST------------------*/
 
 .add-form-main {

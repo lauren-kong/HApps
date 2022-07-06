@@ -5,6 +5,7 @@ import { getRegions, getDistricts } from '../apiClient'
 
 import HeaderTop from './HeaderTop'
 import HeaderBottom from './HeaderBottom'
+import ClockDate from './ClockDate'
 
 function Header(props) {
   const { color } = props
@@ -33,6 +34,7 @@ function Header(props) {
       <div className="header-bottom">
         <HeaderBottom currentRegion={currentRegion} district={district} />
       </div>
+      <ClockDate />
     </div>
   )
 }
