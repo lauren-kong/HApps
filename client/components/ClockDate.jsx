@@ -5,7 +5,6 @@ import Clock from 'react-live-clock'
 import { getRegions, getDistricts } from '../apiClient'
 
 function ClockDate(props) {
-  // const { region, district } = props
   const { regionCode, districtCode } = useParams()
   const [region, setRegion] = useState(null)
   const [district, setDistrict] = useState(null)
@@ -48,40 +47,50 @@ function ClockDate(props) {
     }
   }, [weatherInfo])
 
-  const [loc, setLoc] = useState(null)
-  const [type, setType] = useState(null)
-
-  function blockWeatherClick(e) {
-    e.preventDefault()
-  }
   return (
-    <div className="clock">
-      <Clock
-        format={'dddd DD MMMM YYYY'}
-        ticking={true}
-        timezone={'NZ'}
-        className="clock-day"
-      />
+    <>
+      <div className="clock">
+        <Clock
+          format={'dddd DD MMMM YYYY'}
+          ticking={true}
+          timezone={'NZ'}
+          className="clock-day"
+        />
 
-      <Clock
-        format={'h:mm a'}
-        ticking={true}
-        timezone={'NZ'}
-        className="clock-time"
-      />
+        <Clock
+          format={'h:mm a'}
+          ticking={true}
+          timezone={'NZ'}
+          className="clock-time"
+        />
+        {weatherInfo ? (
+          <iframe
+            className="large-weather"
+            id="widget-iframe"
+            width="280px"
+            height="113px"
+            src={`https://services.metservice.com/weather-widget/widget?params=blue|small|landscape|days-1|modern&loc=${
+              weatherInfo ? weatherInfo.name : ''
+            }&type=${weatherInfo ? weatherInfo.type : 'urban'}`}
+            allowtransparency="true"
+            style={{ border: 'none' }}
+          ></iframe>
+        ) : null}
+      </div>
       {weatherInfo ? (
         <iframe
+          className="medium-weather"
           id="widget-iframe"
-          width="280px"
-          height="113px"
-          src={`https://services.metservice.com/weather-widget/widget?params=blue|small|landscape|days-1|modern&loc=${
+          width="160px"
+          height="203px"
+          src={`https://services.metservice.com/weather-widget/widget?params=blue|small|portrait|days-1|modern&loc=${
             weatherInfo ? weatherInfo.name : ''
           }&type=${weatherInfo ? weatherInfo.type : 'urban'}`}
           allowtransparency="true"
           style={{ border: 'none' }}
         ></iframe>
       ) : null}
-    </div>
+    </>
   )
 }
 

@@ -1,6 +1,8 @@
 import React from 'react'
 import { Link } from 'react-router-dom'
 
+import ClockDate from './ClockDate'
+
 import RegionDropdown from './RegionDropdown'
 
 function HeaderLogo(props) {
