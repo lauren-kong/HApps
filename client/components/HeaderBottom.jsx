@@ -1,7 +1,6 @@
 import React from 'react'
 import { useEffect, useState } from 'react'
 import { Link, useParams } from 'react-router-dom'
-import ScrollToTop from 'react-scroll-up'
 
 import DistrictsDropdown from './DistrictsDropdown'
 

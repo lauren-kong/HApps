@@ -4,9 +4,10 @@ import Axios from 'axios'
 
 // require('dotenv').config()
 // eslint-disable-next-line no-unused-vars
-const url = '/api/v1/locations'
-const filesURL = '/api/v1/upload'
-const cloudinaryEndPoint = 'https://api.cloudinary.com/v1_1/dvftesn1v/image'
+export const url = '/api/v1/locations'
+export const filesURL = '/api/v1/upload'
+export const cloudinaryEndPoint =
+  'https://api.cloudinary.com/v1_1/dvftesn1v/image'
 
 // const api_key = process.env.REACT_APP_CLOUD_KEY
 // const api_secret = process.env.REACT_APP_CLOUD_SECRET
