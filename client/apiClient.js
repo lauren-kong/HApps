@@ -1,10 +1,15 @@
 // eslint-disable-next-line no-unused-vars
 import request from 'superagent'
 import Axios from 'axios'
+
+// require('dotenv').config()
 // eslint-disable-next-line no-unused-vars
 const url = '/api/v1/locations'
 const filesURL = '/api/v1/upload'
 const cloudinaryEndPoint = 'https://api.cloudinary.com/v1_1/dvftesn1v/image'
+
+// const api_key = process.env.REACT_APP_CLOUD_KEY
+// const api_secret = process.env.REACT_APP_CLOUD_SECRET
 
 export function getRegions() {
   return request
@@ -169,6 +174,28 @@ export function uploadImageToCloudinary(data) {
       console.error(err)
     })
 }
+
+// export function deleteImagesOnCloudinary(imgArr) {
+//   imgArr.map((img) => {
+//     const timestamp = new Date().getTime()
+//     const string = `public_id=${img.publicId}&timestamp=${timestamp}${api_secret}`
+//     const signature = sha256(string)
+//     const formData = new FormData()
+//     console.log(img.signature)
+//     formData.append('public_id', img.publicId)
+//     formData.append('signature', signature)
+//     formData.append('api_key', api_key)
+//     formData.append('timestamp', timestamp)
+//     return Axios.post(`${cloudinaryEndPoint}/destroy`, formData)
+//       .then((res) => {
+//         console.log(res)
+//         return res
+//       })
+//       .catch((err) => {
+//         console.error(err)
+//       })
+//   })
+// }
 
 export function deleteImagesOnCloudinary(formData) {
   return Axios.post(`${cloudinaryEndPoint}/destroy`, formData)

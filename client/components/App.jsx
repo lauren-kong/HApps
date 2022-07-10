@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from 'react'
 import { getRegions, getPostsByRegionCode, getDistricts } from '../apiClient'
+import ScrollToTop from 'react-scroll-up'
 
 import AddPost from './AddPost'
 import HeaderTop from './HeaderTop'
@@ -19,7 +20,7 @@ const App = () => {
           path="locations/:regionCode/addPost"
           element={
             <>
-              <ClockDate />
+              {/* <ClockDate /> */}
               <div className="ADDPOST-MAINS">
                 <Header />
                 <AddPost />
@@ -33,7 +34,7 @@ const App = () => {
           path="/locations/:regionCode/:districtCode"
           element={
             <>
-              <ClockDate />
+              {/* <ClockDate /> */}
               <div className="POST_MAINS">
                 <Header />
                 <Posts />
@@ -47,7 +48,7 @@ const App = () => {
           path="/locations/:regionCode"
           element={
             <>
-              <ClockDate />
+              {/* <ClockDate /> */}
               <div className="POST_MAINS">
                 <Header />
                 <Posts />
@@ -68,6 +69,11 @@ const App = () => {
 
         <Route key="home" path="/" element={<Home />} />
       </Routes>
+      <ScrollToTop showUnder={160} topPosition={0} duration={1}>
+        <div className="scroll-button">
+          <i className="fa-solid fa-angles-up"></i>
+        </div>
+      </ScrollToTop>
     </div>
   )
 }

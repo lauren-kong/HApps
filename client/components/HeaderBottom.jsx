@@ -1,10 +1,13 @@
 import React from 'react'
 import { useEffect, useState } from 'react'
 import { Link, useParams } from 'react-router-dom'
+import ScrollToTop from 'react-scroll-up'
 
 import DistrictsDropdown from './DistrictsDropdown'
 
 import { getDistricts, getRegions } from '../apiClient'
+
+import ClockDate from './ClockDate'
 
 function HeaderBottom(props) {
   const { regionCode, districtCode } = useParams()
@@ -34,7 +37,6 @@ function HeaderBottom(props) {
 
   return (
     <>
-      <div className="header-bottom-left"></div>
       <div className="header-bottom-mid">
         <Link to={`/locations/${regionCode}`} className="no-underline">
           <div
@@ -62,7 +64,7 @@ function HeaderBottom(props) {
           )}
         </div>
       </div>
-      <div className="header-bottom-right"></div>
+      {/* <ClockDate /> */}
     </>
   )
 }

@@ -8,9 +8,13 @@ import {
 } from '../apiClient'
 import sha256 from 'crypto-js/sha256'
 
+// require('dotenv').config()
+
 function Post(props) {
   const api_key = '739489637624155'
   const api_secret = 'r3LH1BeNQUYG8mAKIXA0w7WvZAQ'
+  // const api_key = process.env.REACT_APP_CLOUD_KEY
+  // const api_secret = process.env.REACT_APP_CLOUD_SECRET
   const { post, handlePostsUpdate, onEditMode, updateDelete } = props
 
   const [passwordInDelPrompt, setPasswordInDelPrompt] = useState(null)
@@ -97,6 +101,24 @@ function Post(props) {
       setPasswordInDelPrompt(prompt('The password is incorrect. Try again'))
     }
   }, [passwordInDelPrompt])
+
+  // useEffect(() => {
+  //   if (!passwordInDelPrompt) {
+  //     return null
+  //   } else if (passwordInDelPrompt === post.password) {
+  //     console.log('need to delete this post')
+  //     deletePost(post.postId).then((res) => {
+  //       if (typeof post.postImages[0] === 'object') {
+  //         deleteImagesOnCloudinary(post.postImages).then((res) => {
+  //           console.log(res)
+  //           updateDelete()
+  //         })
+  //       }
+  //     })
+  //   } else {
+  //     setPasswordInDelPrompt(prompt('The password is incorrect. Try again'))
+  //   }
+  // }, [passwordInDelPrompt])
 
   function editButtonClickHandler(e) {
     const password = prompt('Please enter post password')
