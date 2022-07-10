@@ -5,7 +5,7 @@ import {
   updatePostClicked,
   deletePost,
   deleteImagesOnCloudinary,
-} from '../apiClient'
+} from '../apiClient/apiClient'
 import sha256 from 'crypto-js/sha256'
 
 // require('dotenv').config()

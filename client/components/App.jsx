@@ -1,5 +1,4 @@
-import React, { useState, useEffect } from 'react'
-import { getRegions, getPostsByRegionCode, getDistricts } from '../apiClient'
+import React from 'react'
 import ScrollToTop from 'react-scroll-up'
 
 import AddPost from './AddPost'
@@ -8,7 +7,6 @@ import Header from './Header'
 import Locations from './Locations'
 import Home from './Home'
 import Posts from './Posts'
-import ClockDate from './ClockDate'
 import { Routes, Route } from 'react-router-dom'
 
 const App = () => {

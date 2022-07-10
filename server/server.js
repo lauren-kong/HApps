@@ -3,8 +3,8 @@ const express = require('express')
 
 const locations = require('./routes/locations')
 const upload = require('./routes/upload')
+
 const cors = require('cors')
-const { resolve } = require('path')
 
 const server = express()
 server.use(express.json())

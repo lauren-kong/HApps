@@ -424,15 +424,7 @@ body {
     font-size: 1.8rem;
   }
   .region-title {
-    background: var(--main-color-main4-transparent);
-    position: absolute;
-    z-index: 1;
-    margin: auto;
     font-size: 1rem;
-    padding: auto;
-    max-width: 163.1px;
-    color: white;
-    text-align: center;
   }
 }
 /*---------------POSTS------------------*/

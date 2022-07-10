@@ -1,7 +1,11 @@
 import React, { useState, useEffect, useRef } from 'react'
 import sha256 from 'crypto-js/sha256'
 
-import { deletePost, deleteImagesOnCloudinary, updatePost } from '../apiClient'
+import {
+  deletePost,
+  deleteImagesOnCloudinary,
+  updatePost,
+} from '../apiClient/apiClient'
 
 function EditPost(props) {
   const { post, offEditMode } = props

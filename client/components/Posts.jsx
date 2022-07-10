@@ -1,13 +1,14 @@
 import React from 'react'
 import { useEffect, useState } from 'react'
-
+import { useSelector, useDispatch } from 'react-redux'
 import { useParams } from 'react-router-dom'
 
 import Post from './Post'
 import EditPost from './EditPost'
-import { getPostsByRegionCode, getPostById } from '../apiClient'
 
-function Posts(props) {
+import { getPostsByRegionCode, getPostById } from '../apiClient/apiClient'
+
+function Posts() {
   //JAVASCRIPT
   const { regionCode, districtCode } = useParams()
   const [posts, setPosts] = useState(null)

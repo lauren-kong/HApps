@@ -12,18 +12,6 @@ export const cloudinaryEndPoint =
 // const api_key = process.env.REACT_APP_CLOUD_KEY
 // const api_secret = process.env.REACT_APP_CLOUD_SECRET
 
-export function getRegions() {
-  return request
-    .get(url)
-    .then((res) => {
-      const result = res.body
-      return result
-    })
-    .catch((err) => {
-      console.error(err)
-    })
-}
-
 export function getDistricts() {
   return request
     .get(`${url}/districts/all`)

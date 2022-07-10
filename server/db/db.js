@@ -5,6 +5,7 @@ const connection = require('knex')(config)
 module.exports = {
   getRegions,
   getDistricts,
+  getAllPosts,
   getPostsByRegionCode,
   getPostsByDistrictCode,
   updatePostClicked,
@@ -78,6 +79,10 @@ function updateReliabCount(id, num, db = connection) {
 
 function getPostById(id, db = connection) {
   return db('posts').select().where({ id }).first()
+}
+
+function getAllPosts(db = connection) {
+  return db('posts').select()
 }
 
 function deletePostById(id, db = connection) {

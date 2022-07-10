@@ -5,8 +5,7 @@ import { useParams } from 'react-router-dom'
 
 import { getDistricts } from '../apiClient'
 
-function DistrictsDropdown(props) {
-  // const { districts } = props
+function DistrictsDropdown() {
   const { regionCode, districtCode } = useParams()
   const [districts, setDistricts] = useState(null)
   const [currentDistrict, setCurrentDistrict] = useState(null)
