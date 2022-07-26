@@ -2,7 +2,7 @@
   "name": "happs",
   "version": "0.2.1",
   "description": "React components consuming Web APIs",
-  "repository": "https://github.com/dev-academy-challenges/react-to-web-api.git",
+  "repository": "https://github.com/lauren-kong/HApps",
   "main": "server/index.js",
   "scripts": {
     "start": "node server",
